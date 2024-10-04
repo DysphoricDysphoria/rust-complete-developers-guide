@@ -35,7 +35,7 @@ impl Deck {
 }
 
 fn main() {
-    let deck = Deck::new();
+    let deck: Deck = Deck::new();
 
     println!("Here's your deck: {:#?}", deck);
 }
