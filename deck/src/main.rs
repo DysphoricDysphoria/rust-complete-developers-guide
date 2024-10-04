@@ -1,3 +1,5 @@
+use rand::{seq::SliceRandom, thread_rng};
+
 #[derive(Debug)] // This is a derive attribute. This enhances the functionality of our struct.
 struct Deck {
     cards: Vec<String>,
@@ -16,6 +18,7 @@ impl Deck {
         let suits = ["Hearts", "Diamonds", "Clubs", "Spades"]; // List of 'suits' - 'hearts', 'diamonds', 'clubs', 'spades'
         let values = ["Ace", "Two", "Three"]; // List of 'values' - 'ace', 'two' etc.
 
+        // Variables are 'bindings' in Rust
         let mut cards = vec![]; // Without 'mut' we can't reassign or change the value of bindings
 
         // Double nested for loop to create a deck of cards
@@ -27,15 +30,30 @@ impl Deck {
             }
         }
 
-        // Variables are 'bindings' in Rust
-        let deck: Deck = Deck { cards }; // Vec::new() is the same as vec![]
+        // Implicit return - rust automatically returns the last expression in a block (without a semicolon)
+        Deck { cards } // Vec::new() is the same as vec![]
+    }
 
-        return deck;
+    // Crate == Package
+    fn shuffle(&mut self) {
+        let mut rng = thread_rng(); // thread_rng() is a function that returns a random number generator
+        self.cards.shuffle(&mut rng); // shuffle() is a method that shuffles the deck
+    }
+
+    fn deal(&mut self, num_cards: usize) -> Vec<String> {
+        let cards_to_keep = self.cards.len() - num_cards;
+        self.cards.split_off(cards_to_keep)
     }
 }
 
 fn main() {
-    let deck: Deck = Deck::new();
+    let mut deck: Deck = Deck::new();
 
-    println!("Here's your deck: {:#?}", deck);
+    deck.shuffle();
+
+    // TODO: Need to add error handling; try using 100 instead of 3
+    let cards = deck.deal(3);
+
+    println!("Here's your hand: {:#?}", cards);
+    println!("Here's your deck: {:#?}", deck.cards);
 }
