@@ -21,5 +21,6 @@
 
 - Crate is a Package in Rust
   - Installation: `cargo add <crate-name>`
+    - Ex: `cargo add rand`
   - [Listing](crates.io)
   - [Docs](docs.rs)
