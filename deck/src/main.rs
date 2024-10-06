@@ -30,7 +30,7 @@ impl Deck {
             }
         }
 
-        // Implicit return - rust automatically returns the last expression in a block (without a semicolon)
+        // Implicit return - rust automatically returns the last expression in a block (without a semicolon!)
         Deck { cards } // Vec::new() is the same as vec![]
     }
 
