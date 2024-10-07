@@ -42,9 +42,9 @@ impl Deck {
         self.cards.shuffle(&mut rng); // shuffle() is a method that shuffles the deck
     }
 
-    fn deal(&mut self, num_cards: usize) -> Vec<String> {
-        let cards_to_keep = self.cards.len() - num_cards;
-        self.cards.split_off(cards_to_keep)
+    fn deal(&mut self, num_cards_to_remove: usize) -> Vec<String> {
+        let removal_idx = self.cards.len() - num_cards_to_remove;
+        self.cards.split_off(removal_idx)
     }
 }
 
@@ -55,8 +55,8 @@ fn main() {
     deck.shuffle();
 
     // TODO: Need to add error handling; try using 100 instead of 3 => deal(100)
-    let cards = deck.deal(3);
+    let cards_via_deal = deck.deal(3);
 
-    println!("Here's your hand: {:#?}", cards);
+    println!("Here's your hand: {:#?}", cards_via_deal);
     println!("Here's your deck: {:#?}", deck.cards);
 }
