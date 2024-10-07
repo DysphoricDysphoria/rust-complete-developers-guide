@@ -13,13 +13,15 @@ struct Deck {
 
 // Inherent implementation block
 impl Deck {
-    // We can also use 'Deck' instead of 'Self' in the function signature
+    // We can also use '-> Deck' instead of '-> Self' in the function signature
     fn new() -> Self {
         let suits = ["Hearts", "Diamonds", "Clubs", "Spades"]; // List of 'suits' - 'hearts', 'diamonds', 'clubs', 'spades'
         let values = ["Ace", "Two", "Three"]; // List of 'values' - 'ace', 'two' etc.
 
         // Variables are 'bindings' in Rust
-        let mut cards = vec![]; // Without 'mut' we can't reassign or change the value of bindings
+        let mut cards = Vec::new();
+        // Without 'mut' we can't reassign or change the value of bindings
+        // Vec::new() is the same as vec![]
 
         // Double nested for loop to create a deck of cards
         // for each suit in suits
@@ -31,7 +33,7 @@ impl Deck {
         }
 
         // Implicit return - rust automatically returns the last expression in a block (without a semicolon!)
-        Deck { cards } // Vec::new() is the same as vec![]
+        Deck { cards }
     }
 
     // Crate == Package
@@ -49,9 +51,10 @@ impl Deck {
 fn main() {
     let mut deck: Deck = Deck::new();
 
+    // Shuffle the deck
     deck.shuffle();
 
-    // TODO: Need to add error handling; try using 100 instead of 3
+    // TODO: Need to add error handling; try using 100 instead of 3 => deal(100)
     let cards = deck.deal(3);
 
     println!("Here's your hand: {:#?}", cards);
