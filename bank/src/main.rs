@@ -56,6 +56,6 @@ fn main() {
 
 /*
     ### Rules ###
-    1. Ever value is 'owned' by a single variable (binding), struct, vector, etc. at a time
-    2. Reassigning the value to a variable (binding), passing it to a function, putting it into a vector, etc, moves the value. The old owner can't be used to access the value anymore!
+    1. Every value is 'owned' by a single variable (binding), struct, vector, etc. at a time
+    2. Reassigning the value to a variable (binding), passing it to a function, putting it into a vector, etc. moves the value. The old owner can't be used to access the value anymore!
 */
