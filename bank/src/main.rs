@@ -31,18 +31,53 @@ impl Bank {
     }
 }
 
-fn print_account(account: Account) -> Account {
+fn print_account(account: &Account) {
     println!("{:#?}", account);
-    account
+}
+
+fn print_account_list_with_ref(accounts: &Vec<Account>) {
+    println!("{:#?}", accounts);
+}
+
+fn print_account_list_without_ref(accounts: Vec<Account>) {
+    println!("{:#?}", accounts);
+}
+
+fn ref_demo_1() {
+    let bank = Bank::new();
+    let account = Account::new(1, String::from("John Wick 2"));
+
+    let account_ref = &account;
+
+    print_account(account_ref);
+
+    let bank_accounts_ref = &bank.accounts;
+
+    print_account_list_with_ref(bank_accounts_ref);
+
+    // TODO: The rule is "You can't move a value while a ref to the value exists."; Reference to bank.accounts exist still we are able to move it?
+    print_account_list_without_ref(bank.accounts);
+
+    // println!("{:#?}", bank); // !Error: borrow of partially move value: `bank`
 }
 
 fn main() {
-    let mut account = Account::new(1, String::from("John Wick"));
+    let account = Account::new(1, String::from("John Wick"));
 
-    account = print_account(account);
-    account = print_account(account);
+    // Multiple references can co-exist for a value
+    let account_ref_1 = &account;
+    let account_ref_2 = &account;
+
+    // account_ref_1.balance = 100; // !Error: Can't use reference to update value
+
+    // let other_account = account; // !Error: Can't move a value while reference(s) to the value exist
+
+    print_account(account_ref_1);
+    print_account(account_ref_2);
 
     println!("{:#?}", account);
+
+    ref_demo_1();
 }
 
 /*
@@ -53,7 +88,11 @@ fn main() {
 */
 
 /*
-    ### Rules ###
+    ### Rules - Ownership ###
     1. Every value is 'owned' by a single variable (binding), struct, vector, etc. at a time
     2. Reassigning the value to a variable (binding), passing it to a function, putting it into a vector, etc. moves the value. The old owner can't be used to access the value anymore!
+
+    ### Rules - Borrowing ###
+    3. You can create many read-only (immutable) references to a value. These refs can all exist at the same time.
+    4. You can't move a value while a ref to the value exists.
 */
