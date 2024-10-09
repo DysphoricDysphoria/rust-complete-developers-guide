@@ -55,8 +55,13 @@ fn ref_demo_1() {
 
     print_account_list_with_ref(bank_accounts_ref);
 
-    // TODO: The rule is "You can't move a value while a ref to the value exists."; Reference to bank.accounts exist still we are able to move it?
+    /*
+        >>> QUESTION: The rule is "You can't move a value while a ref to the value exists."; Reference to bank.accounts exist still we are able to move it?
+            Answer: Rust allows you to borrow part of a struct (like a field) and later move the entire field out of the struct, as long as you DON'T USE THE REFERENCE AFTER THE MOVE.
+    */
     print_account_list_without_ref(bank.accounts);
+
+    // print_account_list_with_ref(bank_accounts_ref); // Can't use the reference once a value (bank.accounts) has been moved
 
     // println!("{:#?}", bank); // !Error: borrow of partially move value: `bank`
 }
@@ -70,12 +75,12 @@ fn main() {
 
     // account_ref_1.balance = 100; // !Error: Can't use reference to update value
 
-    // let other_account = account; // !Error: Can't move a value while reference(s) to the value exist
+    // let other_account = account; // !Error: Can't move a value while reference(s) to the value exist (Caveat: Can move if the reference isn't used later on)
 
     print_account(account_ref_1);
     print_account(account_ref_2);
 
-    println!("{:#?}", account);
+    // println!("{:#?}", account);
 
     ref_demo_1();
 }
