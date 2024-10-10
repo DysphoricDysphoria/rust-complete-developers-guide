@@ -117,7 +117,9 @@ fn main() {
 }
 
 /*
+    ### ### ### ### #
     ### Ownership ###
+    ### ### ### ### #
     - The goal of ownership is to limit the ways you can reference and change data.
         > Lesson 1: Multiple things can refer to a value at the same time, but they are all read-only
         > Lesson 2: A value can only be updated when there are no read-only references to it
