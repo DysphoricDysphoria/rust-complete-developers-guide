@@ -86,7 +86,7 @@ fn ref_demo_1() {
     */
     print_account_list_without_ref(bank.accounts);
 
-    // print_account_list_with_ref(bank_accounts_ref); // Can't use the reference once a value (bank.accounts) has been moved
+    // print_account_list_with_ref(bank_accounts_ref); // !Error: Can't use the reference once a value (bank.accounts) has been moved
 
     // println!("{:#?}", bank); // !Error: borrow of partially move value: `bank`
 }
