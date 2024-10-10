@@ -66,7 +66,7 @@ fn ref_demo_1() {
     // println!("{:#?}", bank); // !Error: borrow of partially move value: `bank`
 }
 
-fn main() {
+fn ref_demo_0() {
     let account = Account::new(1, String::from("John Wick"));
 
     // Multiple references can co-exist for a value
@@ -81,6 +81,10 @@ fn main() {
     print_account(account_ref_2);
 
     // println!("{:#?}", account);
+}
+
+fn main() {
+    ref_demo_0();
 
     ref_demo_1();
 }
