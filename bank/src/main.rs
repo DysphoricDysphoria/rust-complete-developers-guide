@@ -99,5 +99,5 @@ fn main() {
 
     ### Rules - Borrowing ###
     3. You can create many read-only (immutable) references to a value. These refs can all exist at the same time.
-    4. You can't move a value while a ref to the value exists.
+    4. You can't move a value while a ref to the value exists. (Caveat: Can move if the reference isn't used later on)
 */
