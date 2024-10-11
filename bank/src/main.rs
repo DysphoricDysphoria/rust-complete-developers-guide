@@ -72,11 +72,11 @@ fn ref_demo_1() {
     let bank = Bank::new();
     let account = Account::new(1, String::from("John Wick 2"));
 
-    let account_ref = &account;
+    let account_ref = &account; // Immutable reference
 
     print_account(account_ref);
 
-    let bank_accounts_ref = &bank.accounts;
+    let bank_accounts_ref = &bank.accounts; // Immutable reference
 
     print_account_list_with_ref(bank_accounts_ref);
 
@@ -138,6 +138,6 @@ fn main() {
         3. You can create many read-only (immutable) references to a value. These refs can all exist at the same time.
         4. You can't move a value while a ref to the value exists. (Caveat: Can move if the reference isn't used later on)
 
-        5. You can make a writeable (mutable) reference to a value only if there are no read-only references currently in use. One mutable ref to a value can exist at a time (although we can have numerous read-only references).
+        5. You can make a writeable (mutable) reference to a value only if there are no read-only references currently in use. One mutable ref to a value can exist at a time (although we can have numerous immutable (read-only) references).
         6. You can't mutate a value through the owner when any ref (mutable or immutable) to the value exists.
 */
