@@ -108,12 +108,22 @@ fn ref_demo_2() {
     // println!("{:#?}", account_ref_read_only.holder); // Here we are using a immutable reference although we already have a mutable reference
 }
 
+fn ref_demo_3() {
+    let num = 5;
+
+    let other_num = num;
+
+    println!("{} {}", num, other_num);
+}
+
 fn main() {
     ref_demo_0();
 
     ref_demo_1();
 
     ref_demo_2();
+
+    ref_demo_3();
 }
 
 /*
@@ -140,4 +150,6 @@ fn main() {
 
         5. You can make a writeable (mutable) reference to a value only if there are no read-only references currently in use. One mutable ref to a value can exist at a time (although we can have numerous immutable (read-only) references).
         6. You can't mutate a value through the owner when any ref (mutable or immutable) to the value exists.
+
+        7. Some types of values like all numbers, booleans, char, tuples, arrays, references etc. are going to appear to break the rules of ownership!
 */
