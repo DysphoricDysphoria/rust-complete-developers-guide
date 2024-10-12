@@ -110,9 +110,7 @@ fn ref_demo_2() {
 
 fn ref_demo_3() {
     let num = 5;
-
-    let other_num = num;
-
+    let other_num = num; // Ownership isn't transferred from num to other_num
     println!("{} {}", num, other_num);
 }
 
