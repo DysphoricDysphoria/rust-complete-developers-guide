@@ -51,6 +51,16 @@ fn change_account(account: &mut Account) {
     account.balance = 10;
 }
 
+// NOTE: Try using &Account and return &account => !Error
+fn make_and_print_account() -> Account {
+    let account: Account = Account::new(1, String::from("John Wick 4"));
+
+    println!("{:#?}", account);
+
+    // &account // !Error - Can't return a reference to account which is owned by the current function
+    account
+}
+
 fn ref_demo_0() {
     let account = Account::new(1, String::from("John Wick 1"));
 
@@ -113,6 +123,10 @@ fn ref_demo_3() {
     println!("{} {}", num, other_num);
 }
 
+fn lifetimes_demo_0() {
+    let _account = make_and_print_account();
+}
+
 fn main() {
     ref_demo_0();
 
@@ -121,6 +135,8 @@ fn main() {
     ref_demo_2();
 
     ref_demo_3();
+
+    lifetimes_demo_0();
 }
 
 /*
@@ -149,4 +165,11 @@ fn main() {
         6. You can't mutate a value through the owner when any ref (mutable or immutable) to the value exists.
 
         7. Some types of values like all numbers, booleans, char, tuples, arrays, references etc. are going to appear to break the rules of ownership!
+
+    ### ### ### ### ### ### #
+    ### Rules - Lifetimes ###
+    ### ### ### ### ### ### #
+        8. When an owner goes out of scope, the value owned by it is dropped (cleaned up in memory)
+        9. There can't be references to a value when its owner goes out of scope
+        10.
 */
