@@ -94,10 +94,9 @@ fn ref_demo_1() {
 fn ref_demo_2() {
     let mut account = Account::new(1, String::from("John Wick 3"));
 
-    // let account_ref_read_only = &account; // !Error: We can't have a read-only (immutable) reference if we have a mutable reference
+    // let account_ref_read_only = &account; // !Error: We can't have a read-only (immutable) reference if we have a mutable reference or otherwise; depends on what is initialized and used first
 
-    // Mutable reference
-    let account_ref_mutable_1 = &mut account;
+    let account_ref_mutable_1 = &mut account; // Mutable reference
 
     // account.balance = 100; // !Error: Can't modify a binding via its owner if we have a reference (mutable or immutable)
 
