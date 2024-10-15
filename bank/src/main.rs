@@ -195,8 +195,8 @@ fn main() {
 
     // Accounts
     let mut account_1 = Account::new(1, String::from("John Wick"));
-    let mut account_2 = Account::new(1, String::from("John McClane"));
-    let mut account_3 = Account::new(1, String::from("Frank Castle"));
+    let mut account_2 = Account::new(2, String::from("John McClane"));
+    let mut account_3 = Account::new(3, String::from("Frank Castle"));
 
     // Ops on account_1
     account_1.deposit(100);
