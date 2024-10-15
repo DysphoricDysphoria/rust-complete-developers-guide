@@ -171,5 +171,8 @@ fn main() {
     ### ### ### ### ### ### #
         8. When an owner goes out of scope, the value owned by it is dropped (cleaned up in memory)
         9. There can't be references to a value when its owner goes out of scope
-        10.
+        10. References to a value can't outlive the value they refer to
+
+    11. These rules will dramatically change how you write code (compared to other languages)
+    12. When in doubt, remember that Rust wants to minimize unexpected updates to data
 */
