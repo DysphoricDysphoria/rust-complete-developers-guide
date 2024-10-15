@@ -189,7 +189,7 @@ fn demos() {
 }
 
 fn main() {
-    // demos();
+    demos();
 
     let mut bank = Bank::new();
 
