@@ -15,6 +15,21 @@ impl Account {
             id,
         }
     }
+
+    fn summary(&self) -> String {
+        format!("{} has balance {}", self.holder, self.balance)
+    }
+
+    // TODO: What if 'amount' is negative?
+    fn deposit(&mut self, amount: i32) -> i32 {
+        self.balance += amount;
+        self.balance
+    }
+
+    fn withdraw(&mut self, amount: i32) -> i32 {
+        self.balance -= amount;
+        self.balance
+    }
 }
 
 #[derive(Debug)]
@@ -28,6 +43,37 @@ impl Bank {
         Bank {
             accounts: Vec::new(), // vec![]
         }
+    }
+
+    fn add_account(&mut self, account: Account) {
+        self.accounts.push(account);
+    }
+
+    fn total_balance(&self) -> i32 {
+        // ### Method 1 ###
+        // let mut total = 0;
+        // for acc in &self.accounts {
+        //     total += acc.balance;
+        // }
+        // total
+
+        // ### Method 2 ###
+        self.accounts.iter().map(|account| account.balance).sum()
+    }
+
+    fn summary(&self) -> Vec<String> {
+        // ### Method 1 ###
+        // let mut summary = Vec::new();
+        // for acc in &self.accounts {
+        //     summary.push(acc.summary());
+        // }
+        // summary
+
+        // ### Method 2 ###
+        self.accounts
+            .iter()
+            .map(|account| account.summary())
+            .collect::<Vec<String>>()
     }
 }
 
@@ -127,7 +173,7 @@ fn lifetimes_demo_0() {
     let _account = make_and_print_account();
 }
 
-fn main() {
+fn demos() {
     ref_demo_0();
 
     ref_demo_1();
@@ -137,6 +183,38 @@ fn main() {
     ref_demo_3();
 
     lifetimes_demo_0();
+}
+
+fn main() {
+    // demos();
+
+    let mut bank = Bank::new();
+
+    // Accounts
+    let mut account_1 = Account::new(1, String::from("John Wick 5"));
+    let mut account_2 = Account::new(1, String::from("John McClane"));
+    let mut account_3 = Account::new(1, String::from("Frank Castle"));
+
+    // Ops on account_1
+    account_1.deposit(100);
+    account_1.withdraw(80);
+    println!("{}\n", account_1.summary());
+
+    // Deposit to account_2
+    account_2.deposit(10);
+
+    // Deposit to account_3
+    account_3.deposit(30);
+
+    // Add accounts
+    bank.add_account(account_1);
+    bank.add_account(account_2);
+    bank.add_account(account_3);
+
+    println!("Total balance in bank: {}\n", bank.total_balance());
+    println!("Account summaries: {:#?}\n", bank.summary());
+
+    println!("{:#?}", bank);
 }
 
 /*
