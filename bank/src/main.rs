@@ -17,7 +17,10 @@ impl Account {
     }
 
     fn summary(&self) -> String {
-        format!("{} has balance {}", self.holder, self.balance)
+        format!(
+            "{} (AccID: {}) has balance {}",
+            self.holder, self.id, self.balance
+        )
     }
 
     // TODO: What if 'amount' is negative?
