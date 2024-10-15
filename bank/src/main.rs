@@ -99,7 +99,7 @@ fn change_account(account: &mut Account) {
 
 // NOTE: Try using &Account and return &account => !Error
 fn make_and_print_account() -> Account {
-    let account: Account = Account::new(1, String::from("John Wick 4"));
+    let account: Account = Account::new(1, String::from("John Davis"));
 
     println!("{:#?}", account);
 
@@ -108,7 +108,7 @@ fn make_and_print_account() -> Account {
 }
 
 fn ref_demo_0() {
-    let account = Account::new(1, String::from("John Wick 1"));
+    let account = Account::new(1, String::from("Johnny Wick"));
 
     // Multiple immutable references can co-exist for a value
     let account_ref_1 = &account;
@@ -126,7 +126,7 @@ fn ref_demo_0() {
 
 fn ref_demo_1() {
     let bank = Bank::new();
-    let account = Account::new(1, String::from("John Wick 2"));
+    let account = Account::new(1, String::from("Jamie Bravo"));
 
     let account_ref = &account; // Immutable reference
 
@@ -148,7 +148,7 @@ fn ref_demo_1() {
 }
 
 fn ref_demo_2() {
-    let mut account = Account::new(1, String::from("John Wick 3"));
+    let mut account = Account::new(1, String::from("Betty Davis"));
 
     // let account_ref_read_only = &account; // !Error: We can't have a read-only (immutable) reference if we have a mutable reference or otherwise; depends on what is initialized and used first
 
@@ -191,7 +191,7 @@ fn main() {
     let mut bank = Bank::new();
 
     // Accounts
-    let mut account_1 = Account::new(1, String::from("John Wick 5"));
+    let mut account_1 = Account::new(1, String::from("John Wick"));
     let mut account_2 = Account::new(1, String::from("John McClane"));
     let mut account_3 = Account::new(1, String::from("Frank Castle"));
 
