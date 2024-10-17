@@ -58,6 +58,22 @@ impl Catalog {
     fn add(&mut self, media: Media) {
         self.items.push(media); // We are taking ownership of media here
     }
+
+    fn get_by_index(&self, index: usize) -> MightHaveAValue {
+        if self.items.len() > index {
+            // Something to return
+            MightHaveAValue::ThereIsAValue(&self.items[index]) // We don't want to transfer ownership, hence the use of '&'
+        } else {
+            // Nothing to return
+            MightHaveAValue::NoValueAvailable
+        }
+    }
+}
+
+// TODO: `'a` is a lifetime parameter. What is that?
+enum MightHaveAValue<'a> {
+    ThereIsAValue(&'a Media),
+    NoValueAvailable,
 }
 
 // Immutable reference of Media
@@ -97,4 +113,49 @@ fn main() {
     catalog.add(podcast);
 
     println!("{:#?}", catalog);
+    println!("{:#?}", catalog.items.get(4)); // Indexing into 'items' - 'Some'; 'get' is a method on vectors
+    println!("{:#?}", catalog.items.get(100)); // 'None'
+    println!("");
+
+    /*
+        ### Notes ###
+        - Rust doesn't have null, nil, or undefined
+        - We get a built-in enum called 'Option' => Has two variants - 'Some' and 'None'
+        - If you want to work with Option you have to use pattern matching (the 'if let' thing) or a 'match' statement
+        - Forces you to handle the case in which you have a value and the case in which you don't
+
+    */
+
+    match catalog.items.get(100) {
+        Option::Some(value) => {
+            println!("Item: {:#?}", value);
+        }
+        Option::None => {
+            println!("Nothing at that index");
+        }
+    }
+
+    println!("");
+
+    let item_old = catalog.get_by_index(10);
+    match item_old {
+        MightHaveAValue::ThereIsAValue(value) => {
+            println!("Item: {:#?}", value)
+        }
+        MightHaveAValue::NoValueAvailable => {
+            println!("No value available")
+        }
+    }
+
+    println!("");
+
+    let item = catalog.get_by_index(10);
+    // In the next line, we are checking the type of 'item' and then performing an operation etc.
+    if let MightHaveAValue::ThereIsAValue(value) = item {
+        println!("Item in pattern match {:#?}", value);
+    } else {
+        println!("Got no value!")
+    }
+
+    // println!("{:#?}", item);
 }
