@@ -4,8 +4,8 @@ enum Media {
     AudioBook { title: String },
     Book { title: String, author: String },
     Movie { title: String, director: String },
-    // Podcast { episode_number: u32 },
-    Podcast(u32, String), // Unnamed field - This will probably confuse others
+    // Podcast { episode_number: u32, episode_name: String },
+    Podcast(u32, String), // Unnamed fields - This will probably confuse others
     Placeholder,
 }
 
@@ -13,28 +13,30 @@ enum Media {
 impl Media {
     fn description(&self) -> String {
         // ### Method 1 - Tedious ###
-        // if let Media::Book { title, author } = self {
+        // if let Media::AudioBook { title } = self {
+        //     format!("AudioBook: {}", title)
+        // } else if let Media::Book { title, author } = self {
         //     format!("Book: {} - {}", title, author)
         // } else if let Media::Movie { title, director } = self {
         //     format!("Movie: {} - {}", title, director)
-        // } else if let Media::AudioBook { title } = self {
-        //     format!("AudioBook: {}", title)
+        // } else if let Media::Podcast(episode_number, episode_name) = self {
+        //     format!("Podcast: {} - {}", episode_number, episode_name)
         // } else {
         //     String::from("Media description")
         // }
 
         // ### Method 2 - Pattern matching ###
         match self {
+            Media::AudioBook { title } => {
+                format!("AudioBook: {}", title)
+            }
             Media::Book { title, author } => {
                 format!("Book: {} - {}", title, author)
             }
             Media::Movie { title, director } => {
                 format!("Movie: {} - {}", title, director)
             }
-            Media::AudioBook { title } => {
-                format!("AudioBook: {}", title)
-            }
-            // We can use any name like 'episode_number', 'episode_name' etc.
+            // We can use any name instead of 'episode_number' and 'episode_name' since we are using unnamed fields in Podcast variant of Media
             Media::Podcast(episode_number, episode_name) => {
                 format!("Podcast: ({}.) {}", episode_number, episode_name)
             }
@@ -82,35 +84,35 @@ fn print_media(media: &Media) {
 }
 
 fn main() {
-    let a_book = Media::Book {
+    let any_audio_book = Media::AudioBook {
+        title: String::from("Who will cry when you will die"),
+    };
+    let any_book = Media::Book {
         title: String::from("A book"),
         author: String::from("An author"),
     };
-    let a_movie = Media::Movie {
+    let any_movie = Media::Movie {
         title: String::from("Interstellar"),
         director: String::from("A director"),
     };
-    let audio_book = Media::AudioBook {
-        title: String::from("Who will cry when you will die"),
-    };
-    let placeholder = Media::Placeholder;
-    let podcast = Media::Podcast(1, String::from("A Brief History Of Nearly Everything"));
+    let any_podcast = Media::Podcast(101, String::from("A Brief History Of Nearly Everything"));
+    let any_placeholder = Media::Placeholder;
 
-    println!("{}", a_book.description());
-    println!("{}", a_movie.description());
-    println!("{}", audio_book.description());
+    println!("{}", any_audio_book.description());
+    println!("{}", any_book.description());
+    println!("{}", any_movie.description());
 
-    print_media(&a_book);
-    print_media(&a_movie);
-    print_media(&audio_book);
+    print_media(&any_audio_book);
+    print_media(&any_book);
+    print_media(&any_movie);
 
     let mut catalog = Catalog::new();
 
-    catalog.add(a_book);
-    catalog.add(a_movie);
-    catalog.add(audio_book);
-    catalog.add(placeholder);
-    catalog.add(podcast);
+    catalog.add(any_audio_book);
+    catalog.add(any_book);
+    catalog.add(any_movie);
+    catalog.add(any_placeholder);
+    catalog.add(any_podcast);
 
     println!("{:#?}", catalog);
     println!("{:#?}", catalog.items.get(4)); // Indexing into 'items' - 'Some'; 'get' is a method on vectors
@@ -123,10 +125,9 @@ fn main() {
         - We get a built-in enum called 'Option' => Has two variants - 'Some' and 'None'
         - If you want to work with Option you have to use pattern matching (the 'if let' thing) or a 'match' statement
         - Forces you to handle the case in which you have a value and the case in which you don't
-
     */
 
-    match catalog.items.get(100) {
+    match catalog.items.get(10) {
         Option::Some(value) => {
             println!("Item: {:#?}", value);
         }
@@ -137,8 +138,8 @@ fn main() {
 
     println!("");
 
-    let item_old = catalog.get_by_index(10);
-    match item_old {
+    let item_1 = catalog.get_by_index(20);
+    match item_1 {
         MightHaveAValue::ThereIsAValue(value) => {
             println!("Item: {:#?}", value)
         }
@@ -149,9 +150,9 @@ fn main() {
 
     println!("");
 
-    let item = catalog.get_by_index(10);
+    let item_2 = catalog.get_by_index(30);
     // In the next line, we are checking the type of 'item' and then performing an operation etc.
-    if let MightHaveAValue::ThereIsAValue(value) = item {
+    if let MightHaveAValue::ThereIsAValue(value) = item_2 {
         println!("Item in pattern match {:#?}", value);
     } else {
         println!("Got no value!")
