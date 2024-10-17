@@ -5,7 +5,7 @@ enum Media {
     Book { title: String, author: String },
     Movie { title: String, director: String },
     // Podcast { episode_number: u32 },
-    Podcast(u32), // Unnamed field - This will probably confuse others
+    Podcast(u32, String), // Unnamed field - This will probably confuse others
     Placeholder,
 }
 
@@ -34,9 +34,9 @@ impl Media {
             Media::AudioBook { title } => {
                 format!("AudioBook: {}", title)
             }
-            // We can use any name like 'episode_number' etc.
-            Media::Podcast(episode_number) => {
-                format!("Podcast: {}", episode_number)
+            // We can use any name like 'episode_number', 'episode_name' etc.
+            Media::Podcast(episode_number, episode_name) => {
+                format!("Podcast: ({}.) {}", episode_number, episode_name)
             }
             Media::Placeholder => {
                 format!("Placeholder!")
@@ -78,7 +78,7 @@ fn main() {
         title: String::from("Who will cry when you will die"),
     };
     let placeholder = Media::Placeholder;
-    let podcast = Media::Podcast(1);
+    let podcast = Media::Podcast(1, String::from("A Brief History Of Nearly Everything"));
 
     println!("{}", a_book.description());
     println!("{}", a_movie.description());
