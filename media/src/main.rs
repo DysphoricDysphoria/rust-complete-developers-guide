@@ -1,11 +1,11 @@
 #[derive(Debug)]
 enum Media {
-    // Book, Movie etc. are variants of Media
+    // AudioBook, Book, Movie etc. are variants of Media
+    AudioBook { title: String },
     Book { title: String, author: String },
     Movie { title: String, director: String },
-    AudioBook { title: String },
     // Podcast { episode_number: u32 },
-    Podcast(u32), // Unnamed field - This will probably confuse people
+    Podcast(u32), // Unnamed field - This will probably confuse others
     Placeholder,
 }
 
@@ -34,6 +34,7 @@ impl Media {
             Media::AudioBook { title } => {
                 format!("AudioBook: {}", title)
             }
+            // We can use any name like 'episode_number' etc.
             Media::Podcast(episode_number) => {
                 format!("Podcast: {}", episode_number)
             }
@@ -55,44 +56,45 @@ impl Catalog {
     }
 
     fn add(&mut self, media: Media) {
-        self.items.push(media);
+        self.items.push(media); // We are taking ownership of media here
     }
 }
 
+// Immutable reference of Media
 fn print_media(media: &Media) {
     println!("{:#?}", media);
 }
 
 fn main() {
-    let audio_book = Media::AudioBook {
-        title: String::from("Who will cry when you will die?"),
+    let a_book = Media::Book {
+        title: String::from("A book"),
+        author: String::from("An author"),
     };
     let a_movie = Media::Movie {
         title: String::from("Interstellar"),
         director: String::from("A director"),
     };
-    let a_book = Media::Book {
-        title: String::from("A book"),
-        author: String::from("An author"),
+    let audio_book = Media::AudioBook {
+        title: String::from("Who will cry when you will die"),
     };
-    let podcast = Media::Podcast(1);
     let placeholder = Media::Placeholder;
+    let podcast = Media::Podcast(1);
 
-    println!("{}", a_movie.description());
     println!("{}", a_book.description());
+    println!("{}", a_movie.description());
     println!("{}", audio_book.description());
 
-    print_media(&a_movie);
     print_media(&a_book);
+    print_media(&a_movie);
     print_media(&audio_book);
 
     let mut catalog = Catalog::new();
 
-    catalog.add(audio_book);
-    catalog.add(a_movie);
     catalog.add(a_book);
-    catalog.add(podcast);
+    catalog.add(a_movie);
+    catalog.add(audio_book);
     catalog.add(placeholder);
+    catalog.add(podcast);
 
     println!("{:#?}", catalog);
 }
