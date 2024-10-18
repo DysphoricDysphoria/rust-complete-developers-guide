@@ -15,9 +15,9 @@ impl Media {
         // ### Method 1 - Tedious ###
         // if let Media::AudioBook { title } = self {
         //     format!("AudioBook: {}", title)
-        // } else if let Media::Book { title, author } = self {
+        // } else if let Media::Book { author, title } = self {
         //     format!("Book: {} - {}", title, author)
-        // } else if let Media::Movie { title, director } = self {
+        // } else if let Media::Movie { director, director } = self {
         //     format!("Movie: {} - {}", title, director)
         // } else if let Media::Podcast(episode_number, episode_name) = self {
         //     format!("Podcast: {} - {}", episode_number, episode_name)
@@ -30,10 +30,10 @@ impl Media {
             Media::AudioBook { title } => {
                 format!("AudioBook: {}", title)
             }
-            Media::Book { title, author } => {
+            Media::Book { author, title } => {
                 format!("Book: {} - {}", title, author)
             }
-            Media::Movie { title, director } => {
+            Media::Movie { director, title } => {
                 format!("Movie: {} - {}", title, director)
             }
             // We can use any name instead of 'episode_number' and 'episode_name' since we are using unnamed fields in Podcast variant of Media
@@ -45,6 +45,12 @@ impl Media {
             }
         }
     }
+}
+
+// TODO: `'a` is a lifetime parameter. What is that?
+enum MightHaveAValue<'a> {
+    ThereIsAValue(&'a Media),
+    NoValueAvailable,
 }
 
 #[derive(Debug)]
@@ -72,12 +78,6 @@ impl Catalog {
     }
 }
 
-// TODO: `'a` is a lifetime parameter. What is that?
-enum MightHaveAValue<'a> {
-    ThereIsAValue(&'a Media),
-    NoValueAvailable,
-}
-
 // Immutable reference of Media
 fn print_media(media: &Media) {
     println!("{:#?}", media);
@@ -88,12 +88,12 @@ fn main() {
         title: String::from("Who will cry when you will die"),
     };
     let any_book = Media::Book {
-        title: String::from("A book"),
         author: String::from("An author"),
+        title: String::from("A book"),
     };
     let any_movie = Media::Movie {
-        title: String::from("Interstellar"),
         director: String::from("A director"),
+        title: String::from("Interstellar"),
     };
     let any_podcast = Media::Podcast(101, String::from("A Brief History Of Nearly Everything"));
     let any_placeholder = Media::Placeholder;
@@ -151,7 +151,12 @@ fn main() {
     println!("");
 
     let item_2 = catalog.get_by_index(30);
-    // In the next line, we are checking the type of 'item' and then performing an operation etc.
+    /*
+        ### if let ###
+        - Type Assertion: Rust does not have explicit type assertions like some other languages (e.g., TypeScript). Instead, it uses pattern matching to ensure that the type and structure of the data match the expected pattern.
+
+        - Comparison: This is not a comparison in the traditional sense (like ==). It's a pattern match that checks if item_2 is of a specific enum variant and, if so, extracts the contained value.
+    */
     if let MightHaveAValue::ThereIsAValue(value) = item_2 {
         println!("Item in pattern match {:#?}", value);
     } else {
