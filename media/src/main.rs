@@ -2,8 +2,8 @@
 enum Media {
     // AudioBook, Book, Movie etc. are variants of Media
     AudioBook { title: String },
-    Book { title: String, author: String },
-    Movie { title: String, director: String },
+    Book { author: String, title: String },
+    Movie { director: String, title: String },
     // Podcast { episode_number: u32, episode_name: String },
     Podcast(u32, String), // Unnamed fields - This will probably confuse others
     Placeholder,
@@ -17,7 +17,7 @@ impl Media {
         //     format!("AudioBook: {}", title)
         // } else if let Media::Book { author, title } = self {
         //     format!("Book: {} - {}", title, author)
-        // } else if let Media::Movie { director, director } = self {
+        // } else if let Media::Movie { director, title } = self {
         //     format!("Movie: {} - {}", title, director)
         // } else if let Media::Podcast(episode_number, episode_name) = self {
         //     format!("Podcast: {} - {}", episode_number, episode_name)
@@ -64,7 +64,7 @@ impl Catalog {
     }
 
     fn add(&mut self, media: Media) {
-        self.items.push(media); // We are taking ownership of media here
+        self.items.push(media); // We are taking ownership of 'media' here
     }
 
     fn get_by_index(&self, index: usize) -> MightHaveAValue {
@@ -85,7 +85,7 @@ fn print_media(media: &Media) {
 
 fn main() {
     let any_audio_book = Media::AudioBook {
-        title: String::from("Who will cry when you will die"),
+        title: String::from("Who will cry when you will die?"),
     };
     let any_book = Media::Book {
         author: String::from("An author"),
@@ -95,7 +95,7 @@ fn main() {
         director: String::from("A director"),
         title: String::from("Interstellar"),
     };
-    let any_podcast = Media::Podcast(101, String::from("A Brief History Of Nearly Everything"));
+    let any_podcast = Media::Podcast(101, String::from("A Brief History of Nearly Everything"));
     let any_placeholder = Media::Placeholder;
 
     println!("{}", any_audio_book.description());
@@ -162,6 +162,4 @@ fn main() {
     } else {
         println!("Got no value!")
     }
-
-    // println!("{:#?}", item);
 }
