@@ -158,8 +158,8 @@ fn main() {
         - Comparison: This is not a comparison in the traditional sense (like ==). It's a pattern match that checks if item_2 is of a specific enum variant and, if so, extracts the contained value.
     */
     if let MightHaveAValue::ThereIsAValue(value) = item_2 {
-        println!("Item in pattern match {:#?}", value);
+        println!("Item in pattern match: {:#?}", value);
     } else {
-        println!("Got no value!")
+        println!("Got no value!");
     }
 }
