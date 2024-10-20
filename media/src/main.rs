@@ -36,7 +36,7 @@ impl Media {
             Media::Movie { director, title } => {
                 format!("Movie: {} - {}", title, director)
             }
-            // We can use any name instead of 'episode_number' and 'episode_name' since we are using unnamed fields in Podcast variant of Media
+            // We can use any name instead of 'episode_number' and 'episode_name' since we are using unnamed fields in 'Podcast' variant of Media
             Media::Podcast(episode_number, episode_name) => {
                 format!("Podcast: ({}.) {}", episode_number, episode_name)
             }
@@ -127,8 +127,10 @@ fn main() {
         - Forces you to handle the case in which you have a value and the case in which you don't
     */
 
-    match catalog.items.get(10) {
+    let item_0 = catalog.items.get(10);
+    match item_0 {
         Option::Some(value) => {
+            // Here we can add another 'match' statement that checks the type of media and prints stuff accordingly
             println!("Item: {:#?}", value);
         }
         Option::None => {
@@ -155,7 +157,7 @@ fn main() {
         ### if let ###
         - Type Assertion: Rust does not have explicit type assertions like some other languages (e.g., TypeScript). Instead, it uses pattern matching to ensure that the type and structure of the data match the expected pattern.
 
-        - Comparison: This is not a comparison in the traditional sense (like ==). It's a pattern match that checks if item_2 is of a specific enum variant and, if so, extracts the contained value.
+        - Comparison: This is not a comparison in the traditional sense (like ==). It's a pattern match that checks if 'item_2' is of a specific enum variant and, if so, extracts the contained value.
     */
     if let MightHaveAValue::ThereIsAValue(value) = item_2 {
         println!("Item in pattern match: {:#?}", value);
