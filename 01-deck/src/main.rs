@@ -14,6 +14,7 @@ struct Deck {
 // Inherent implementation block
 impl Deck {
     // We can also use '-> Deck' instead of '-> Self' in the function signature
+    // 'new' is an associated function
     fn new() -> Self {
         let suits = ["Hearts", "Diamonds", "Clubs", "Spades"]; // List of 'suits' - 'hearts', 'diamonds', 'clubs', 'spades'
         let values = ["Ace", "Two", "Three"]; // List of 'values' - 'ace', 'two' etc.
@@ -37,11 +38,13 @@ impl Deck {
     }
 
     // Crate == Package
+    // 'shuffle' is a method
     fn shuffle(&mut self) {
         let mut rng = thread_rng(); // thread_rng() is a function that returns a random number generator
         self.cards.shuffle(&mut rng); // shuffle() is a method that shuffles the deck
     }
 
+    // 'deal' is a method
     fn deal(&mut self, num_cards_to_remove: usize) -> Vec<String> {
         let removal_idx = self.cards.len() - num_cards_to_remove;
         self.cards.split_off(removal_idx)

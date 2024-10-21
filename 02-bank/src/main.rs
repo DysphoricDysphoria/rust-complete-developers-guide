@@ -44,7 +44,7 @@ struct Bank {
 impl Bank {
     fn new() -> Self {
         Bank {
-            accounts: Vec::new(), // vec![]
+            accounts: Vec::new(), // Can also use 'vec![]'
         }
     }
 
@@ -226,7 +226,7 @@ fn main() {
     ### ### ### ### #
     - The goal of ownership is to limit the ways you can reference and change data.
         > Lesson 1: Multiple things can refer to a value at the same time, but they are all read-only
-        > Lesson 2: A value can only be updated when there are no read-only references to it
+        > Lesson 2: A value can only be updated when there are no read-only/write references to it
 */
 
 /*
@@ -240,9 +240,9 @@ fn main() {
     ### Rules - Borrowing ###
     ### ### ### ### ### ### #
         3. You can create many read-only (immutable) references to a value. These refs can all exist at the same time.
-        4. You can't move a value while a ref to the value exists. (Caveat: Can move if the reference isn't used later on)
+        4. You can't move a value while a ref to the value exists. (Caveat: Can move if the reference isn't used after moving the value)
 
-        5. You can make a writeable (mutable) reference to a value only if there are no read-only references currently in use. One mutable ref to a value can exist at a time (although we can have numerous immutable (read-only) references).
+        5. You can make a writeable (mutable) reference to a value only if there are no read-only references currently in use. Only one mutable ref to a value can exist at a time (although we can have numerous immutable (read-only) references).
         6. You can't mutate a value through the owner when any ref (mutable or immutable) to the value exists.
 
         7. Some types of values like all numbers, booleans, char, tuples, arrays, references etc. are going to appear to break the rules of ownership!

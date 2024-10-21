@@ -101,10 +101,18 @@ fn main() {
     println!("{}", any_audio_book.description());
     println!("{}", any_book.description());
     println!("{}", any_movie.description());
+    println!("{}", any_podcast.description());
+    println!("{}", any_placeholder.description());
+
+    println!("");
 
     print_media(&any_audio_book);
     print_media(&any_book);
     print_media(&any_movie);
+    print_media(&any_podcast);
+    print_media(&any_placeholder);
+
+    println!("");
 
     let mut catalog = Catalog::new();
 
@@ -124,7 +132,7 @@ fn main() {
         - Rust doesn't have null, nil, or undefined
         - We get a built-in enum called 'Option' => Has two variants - 'Some' and 'None'
         - If you want to work with Option you have to use pattern matching (the 'if let' thing) or a 'match' statement
-        - Forces you to handle the case in which you have a value and the case in which you don't
+            - Forces you to handle the case in which you have a value and the case in which you don't
     */
 
     let item_0 = catalog.items.get(10);
