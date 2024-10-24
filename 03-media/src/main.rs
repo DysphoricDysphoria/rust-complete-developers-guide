@@ -138,7 +138,9 @@ fn main() {
     let item_0 = catalog.items.get(10);
     match item_0 {
         Option::Some(value) => {
-            // Here we can add another 'match' statement that checks the type of media and prints stuff accordingly
+            // Here we can add another 'match' statement that checks the
+            // type of media and prints stuff accordingly. Kinda like what
+            // we have in the 'description' method of Media
             println!("Item: {:#?}", value);
         }
         Option::None => {
