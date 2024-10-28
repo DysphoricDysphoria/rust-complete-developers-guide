@@ -91,6 +91,16 @@ fn print_media(media: &Media) {
     println!("{:#?}", media);
 }
 
+#[derive(Debug)]
+struct Employee {
+    name: String,
+}
+
+#[derive(Debug)]
+struct Task {
+    assigned_to: Option<Employee>,
+}
+
 fn main() {
     let any_audio_book = Media::AudioBook {
         title: String::from("Who will cry when you will die?"),
@@ -230,4 +240,24 @@ fn main() {
     // println!("{:#?}", item_for_unwrap.unwrap())
     // println!("{:#?}", item_for_unwrap.expect("no item found!"))
     println!("{:#?}", item_for_unwrap.unwrap_or(&placeholder));
+
+    println!("");
+
+    let employee1 = Employee {
+        name: String::from("Who Cares"),
+    };
+
+    let task_1 = Task {
+        assigned_to: Some(employee1),
+    };
+
+    let task_2 = Task { assigned_to: None };
+
+    println!("Task 1: {:#?}", task_1);
+
+    println!("");
+
+    println!("Task 2: {:#?}", task_2);
+
+    // Exercise link: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=8cab45161489fe0a2ad027d5222cb3fa
 }
