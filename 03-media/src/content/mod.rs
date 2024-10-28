@@ -6,4 +6,6 @@
 
 // 'mod' keyword imports module; 'pub' keyword exports module
 pub mod catalog;
+pub mod employee;
 pub mod media;
+pub mod task;

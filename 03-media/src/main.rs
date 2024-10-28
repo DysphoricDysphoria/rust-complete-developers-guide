@@ -2,24 +2,17 @@ mod content;
 
 use content::catalog::Catalog;
 use content::catalog::MightHaveAValue;
+use content::employee::Employee;
 use content::media::Media;
+use content::task::Task;
 
 // Immutable reference of Media
 fn print_media(media: &content::media::Media) {
     println!("{:#?}", media);
 }
 
-#[derive(Debug)]
-struct Employee {
-    name: String,
-}
-
-#[derive(Debug)]
-struct Task {
-    assigned_to: Option<Employee>,
-}
-
 fn main() {
+    // In the next line instead of 'content::media::Media::AudioBook' we can also use 'Media::AudioBook'
     let any_audio_book = content::media::Media::AudioBook {
         title: String::from("Who will cry when you will die?"),
     };
