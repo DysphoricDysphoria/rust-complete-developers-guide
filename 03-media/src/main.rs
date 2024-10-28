@@ -229,5 +229,5 @@ fn main() {
 
     // println!("{:#?}", item_for_unwrap.unwrap())
     // println!("{:#?}", item_for_unwrap.expect("no item found!"))
-    println!("{:#?}", item_for_unwrap.unwrap_or(&placeholder))
+    println!("{:#?}", item_for_unwrap.unwrap_or(&placeholder));
 }
