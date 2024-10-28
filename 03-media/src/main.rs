@@ -1,93 +1,11 @@
-#[derive(Debug)]
-enum Media {
-    // AudioBook, Book, Movie etc. are variants of Media
-    AudioBook { title: String },
-    Book { author: String, title: String },
-    Movie { director: String, title: String },
-    // Podcast { episode_number: u32, episode_name: String },
-    Podcast(u32, String), // Unnamed fields - This will probably confuse others
-    Placeholder,
-}
+mod content;
 
-// Inherent implementation
-impl Media {
-    fn description(&self) -> String {
-        // ### Method 1 - Tedious ###
-        // if let Media::AudioBook { title } = self {
-        //     format!("AudioBook: {}", title)
-        // } else if let Media::Book { author, title } = self {
-        //     format!("Book: {} - {}", title, author)
-        // } else if let Media::Movie { director, title } = self {
-        //     format!("Movie: {} - {}", title, director)
-        // } else if let Media::Podcast(episode_number, episode_name) = self {
-        //     format!("Podcast: {} - {}", episode_number, episode_name)
-        // } else {
-        //     String::from("Media description")
-        // }
-
-        // ### Method 2 - Pattern matching ###
-        match self {
-            Media::AudioBook { title } => {
-                format!("AudioBook: {}", title)
-            }
-            Media::Book { author, title } => {
-                format!("Book: {} - {}", title, author)
-            }
-            Media::Movie { director, title } => {
-                format!("Movie: {} - {}", title, director)
-            }
-            // We can use any name instead of 'episode_number' and 'episode_name' since we are using unnamed fields in 'Podcast' variant of Media
-            Media::Podcast(episode_number, episode_name) => {
-                format!("Podcast: ({}.) {}", episode_number, episode_name)
-            }
-            Media::Placeholder => {
-                format!("Placeholder!")
-            }
-        }
-    }
-}
-
-// TODO: `'a` is a lifetime parameter. What is that?
-enum MightHaveAValue<'a> {
-    ThereIsAValue(&'a Media),
-    NoValueAvailable,
-}
-
-#[derive(Debug)]
-struct Catalog {
-    items: Vec<Media>,
-}
-
-impl Catalog {
-    fn new() -> Self {
-        Catalog { items: Vec::new() }
-    }
-
-    fn add(&mut self, media: Media) {
-        self.items.push(media); // We are taking ownership of 'media' here
-    }
-
-    fn get_by_index(&self, index: usize) -> MightHaveAValue {
-        if self.items.len() > index {
-            // Something to return
-            MightHaveAValue::ThereIsAValue(&self.items[index]) // We don't want to transfer ownership, hence the use of '&'
-        } else {
-            // Nothing to return
-            MightHaveAValue::NoValueAvailable
-        }
-    }
-
-    fn get_by_index_new(&self, index: usize) -> Option<&Media> {
-        if self.items.len() > index {
-            Some(&self.items[index])
-        } else {
-            None
-        }
-    }
-}
+use content::catalog::Catalog;
+use content::catalog::MightHaveAValue;
+use content::media::Media;
 
 // Immutable reference of Media
-fn print_media(media: &Media) {
+fn print_media(media: &content::media::Media) {
     println!("{:#?}", media);
 }
 
@@ -102,7 +20,7 @@ struct Task {
 }
 
 fn main() {
-    let any_audio_book = Media::AudioBook {
+    let any_audio_book = content::media::Media::AudioBook {
         title: String::from("Who will cry when you will die?"),
     };
     let any_book = Media::Book {
@@ -244,20 +162,27 @@ fn main() {
     println!("");
 
     let employee1 = Employee {
-        name: String::from("Who Cares"),
+        name: String::from("Mob Boss"),
     };
 
-    let task_1 = Task {
+    let t_1 = Task {
         assigned_to: Some(employee1),
     };
 
-    let task_2 = Task { assigned_to: None };
+    let t_2 = Task { assigned_to: None };
 
-    println!("Task 1: {:#?}", task_1);
+    println!("t_1: {:#?}", t_1);
 
     println!("");
 
-    println!("Task 2: {:#?}", task_2);
+    println!(
+        "t_1.assigned_to.unwrap().name: {:#?}",
+        t_1.assigned_to.unwrap().name
+    );
+
+    println!("");
+
+    println!("t_2.assigned_to: {:#?}", t_2.assigned_to);
 
     // Exercise link: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=8cab45161489fe0a2ad027d5222cb3fa
 }
