@@ -140,7 +140,7 @@ fn main() {
         - Rust doesn't have null, nil, or undefined
         - We get a built-in enum called 'Option' => Has two variants - 'Some' and 'None'
         - If you want to work with Option you have to use pattern matching (the 'if let' thing) or a 'match' statement
-            - Forces you to handle the case in which you have a value and the case in which you don't
+            - FORCES you to handle the case in which you have a value and the case in which you don't
     */
 
     let item_0 = catalog.items.get(10);
@@ -203,4 +203,31 @@ fn main() {
     } else {
         println!("Got no value (if let)!");
     }
+
+    println!("");
+
+    /*
+        ### Handling options ###
+        - unwrap
+            - If 'item' is a Some, returns the value in the Some
+            - If 'item' is a None, panics!
+            - Use for quick debugging examples
+        - expect
+            - If 'item' is a Some, returns the value in the Some
+            - If 'item' is a None, prints the provided debug message
+            and panics!
+            - Use when we want to crash if there is no value
+        - unwrap_or
+            - If 'item' is a Some, returns the value in the Some
+            - If 'item' is a None, returns the provided default value
+            - Use when it makes sense to provide a fallback value
+        - Documentation
+            - https://doc.rust-lang.org/std/option/enum.Option.html
+    */
+    let item_for_unwrap = catalog.get_by_index_new(0);
+    let placeholder = Media::Placeholder;
+
+    // println!("{:#?}", item_for_unwrap.unwrap())
+    // println!("{:#?}", item_for_unwrap.expect("no item found!"))
+    println!("{:#?}", item_for_unwrap.unwrap_or(&placeholder))
 }
