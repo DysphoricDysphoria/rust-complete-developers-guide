@@ -76,6 +76,14 @@ impl Catalog {
             MightHaveAValue::NoValueAvailable
         }
     }
+
+    fn get_by_index_new(&self, index: usize) -> Option<&Media> {
+        if self.items.len() > index {
+            Some(&self.items[index])
+        } else {
+            None
+        }
+    }
 }
 
 // Immutable reference of Media
@@ -162,16 +170,37 @@ fn main() {
 
     println!("");
 
-    let item_2 = catalog.get_by_index(30);
+    let item_2 = catalog.get_by_index_new(9999);
+    match item_2 {
+        Option::Some(value) => {
+            println!("Item (match): {:#?}", value)
+        }
+        Option::None => {
+            println!("No value available (match)")
+        }
+    }
+
+    println!("");
+
+    let item_3 = catalog.get_by_index(30);
     /*
         ### if let ###
         - Type Assertion: Rust does not have explicit type assertions like some other languages (e.g., TypeScript). Instead, it uses pattern matching to ensure that the type and structure of the data match the expected pattern.
 
         - Comparison: This is not a comparison in the traditional sense (like ==). It's a pattern match that checks if 'item_2' is of a specific enum variant and, if so, extracts the contained value.
     */
-    if let MightHaveAValue::ThereIsAValue(value) = item_2 {
+    if let MightHaveAValue::ThereIsAValue(value) = item_3 {
         println!("Item in pattern match: {:#?}", value);
     } else {
         println!("Got no value!");
+    }
+
+    println!("");
+
+    let item_4 = catalog.get_by_index_new(10);
+    if let Some(value) = item_4 {
+        println!("Item in pattern match (if let): {:#?}", value)
+    } else {
+        println!("Got no value (if let)!");
     }
 }
