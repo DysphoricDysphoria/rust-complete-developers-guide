@@ -7,7 +7,7 @@ use content::media::Media;
 use content::task::Task;
 
 // Immutable reference of Media
-fn print_media(media: &content::media::Media) {
+fn print_media(media: &Media) {
     println!("{:#?}", media);
 }
 

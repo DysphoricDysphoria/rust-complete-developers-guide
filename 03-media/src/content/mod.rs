@@ -1,10 +1,11 @@
 /*
     ### Modules ###
-      - Every file and folder makes its own separate module
-      - Can't do deeply nested imports (can't skip levels)
+        - Every file and folder makes its own separate module
+        - Can't do deeply nested imports (can't skip levels)
+        - Whenever we make a folder we need to add 'mod.rs' to it?
 */
 
-// 'mod' keyword imports module; 'pub' keyword exports module
+// 'pub' keyword exports module; 'mod' keyword imports module
 pub mod catalog;
 pub mod employee;
 pub mod media;
