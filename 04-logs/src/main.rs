@@ -151,15 +151,40 @@ fn string_demo_1() {
                   the 'Stack'
 */
 
+fn extract_errors(text: &str) -> Vec<String> {
+    let split_text = text.split("\n");
+
+    let mut results = vec![];
+
+    for line in split_text {
+        if line.starts_with("ERROR") {
+            results.push(line.to_string());
+        }
+    }
+
+    results
+}
+
 fn main() {
+    let mut error_logs = vec![];
+
     match fs::read_to_string("logs.txt") {
         Ok(text_that_was_read) => {
-            println!("{}", text_that_was_read.len())
+            println!("{}", text_that_was_read.len());
+            println!();
+
+            /*
+                - We could have also used '&text_that_was_read'
+                - Also, why does &String::from(text_that_was_read) throws an error?
+            */
+            error_logs = extract_errors(text_that_was_read.as_str());
         }
         Err(reason_text_was_not_read) => {
             println!("Failed to read file: {}", reason_text_was_not_read)
         }
     }
+
+    println!("{:#?}", error_logs);
 
     println!();
 
