@@ -2,6 +2,39 @@ use std::fs;
 use std::io::Error;
 
 /*
+    ### 73. The Stack and Heap (AGAIN) ###
+        - Stack
+            - Fast, but limited size (2 - 8 MB)
+        - Heap
+            - Slow, but can grow to store a lot of data
+        - Data
+            - Stores literal values that we write into our code
+                - Ex: let num = 45; let color = "red"; => 45
+                  and "red" are stored into 'Data'
+        - Example
+            - let numbers = vec![1, 2, 3, 4, 5];
+                - The raw values 1, 2, 3, 4, 5 will initially be
+                  stored into 'Data' then later on copied into
+                  the 'Heap'?
+            - Super common pattern
+                - Stack stores metadata about a data structure
+                  (in this case 'numbers')
+                    - pointer to value(s) | length | capacity
+                - Heap stores the actual data
+                    - Actual values of the vector are stored here
+                - Avoids running out of memory in the stack if the
+                  data structure grows to hold a lot of data
+        - Corner case
+            - If a data structure owns another data structure, the
+              child's metadata will be placed on the heap
+            - Ex: let vec_of_num = vec![ vec![1, 2, 3, 4, 5] ];
+                - Metadata for nested vector will be stored inside
+                  the 'Heap'
+                - Metadata for parent vector will be stored inside
+                  the 'Stack'
+*/
+
+/*
     ### 74. + 75. (AGAIN) ###
         - String
             - Struct (pointer to value | length | capacity) in Stack
@@ -117,39 +150,6 @@ fn string_demo_1() {
         &String::from("blue"),
     );
 }
-
-/*
-    ### 73. The Stack and Heap (AGAIN) ###
-        - Stack
-            - Fast, but limited size (2 - 8 MB)
-        - Heap
-            - Slow, but can grow to store a lot of data
-        - Data
-            - Stores literal values that we write into our code
-                - Ex: let num = 45; let color = "red"; => 45
-                  and "red" are stored into 'Data'
-        - Example
-            - let numbers = vec![1, 2, 3, 4, 5];
-                - The raw values 1, 2, 3, 4, 5 will initially be
-                  stored into 'Data' then later on copied into
-                  the 'Heap'?
-            - Super common pattern
-                - Stack stores metadata about a data structure
-                  (in this case 'numbers')
-                    - pointer to value(s) | length | capacity
-                - Heap stores the actual data
-                    - Actual values of the vector are stored here
-                - Avoids running out of memory in the stack if the
-                  data structure grows to hold a lot of data
-        - Corner case
-            - If a data structure owns another data structure, the
-              child's metadata will be placed on the heap
-            - Ex: let vec_of_num = vec![ vec![1, 2, 3, 4, 5] ];
-                - Metadata for nested vector will be stored inside
-                  the 'Heap'
-                - Metadata for parent vector will be stored inside
-                  the 'Stack'
-*/
 
 fn extract_errors(text: &str) -> Vec<String> {
     let split_text = text.split("\n");
