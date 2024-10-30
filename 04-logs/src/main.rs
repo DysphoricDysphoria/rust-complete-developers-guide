@@ -85,7 +85,9 @@ use std::io::Error;
           segment or text stored in the heap that belongs to a String
 */
 
-fn string_test(a: String, b: &String, c: &str) {}
+fn string_test(a: String, b: &String, c: &str) {
+    println!("{} {} {}", a, b, c)
+}
 
 /*
     ### Result enum ###
