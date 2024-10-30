@@ -193,8 +193,12 @@ fn main() {
             println!();
 
             /*
-                - We could have also used '&text_that_was_read'
-                - Also, why does &String::from(text_that_was_read) throws an error?
+                - We could have also used '&text_that_was_read';
+                  'text_that_was_read.as_str()'
+                - Also, why does &String::from(text_that_was_read)
+                  throws an error?
+                    - extract_errors(text: &str) -> Vec<&str>
+                    - results.push(line.to_string())
             */
             error_logs = extract_errors(text_that_was_read.as_str());
         }
