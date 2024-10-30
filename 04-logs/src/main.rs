@@ -6,16 +6,20 @@ use std::io::Error;
         - Stack
             - Fast, but limited size (2 - 8 MB)
         - Heap
-            - Slow, but can grow to store a lot of data
-        - Data
-            - Stores literal values that we write into our code
-                - Ex: let num = 45; let color = "red"; => 45
-                  and "red" are stored into 'Data'
-        - Example
+            - Slow, but can grow to store a lot of data (Gigabytes
+              worth of data)
+        - Data/Data segment/Read-only-data segment/Static segment
+            - Stores literal values that we write directly into our
+              source code
+                - Ex: let num = 45; let color = "red"; => 45 and
+                  "red" are stored into 'Data'
+        - Ex:
             - let numbers = vec![1, 2, 3, 4, 5];
-                - The raw values 1, 2, 3, 4, 5 will initially be
-                  stored into 'Data' then later on copied into
-                  the 'Heap'?
+                - The initial values 1, 2, 3, 4, 5 will be stored
+                  into 'Data' and when we make the vector, these
+                  will be copied into the 'Heap'
+                  - ? => during parsing, rust might create 1 - 5
+                    in 'Data' and then later copy it into the 'Heap'?
             - Super common pattern
                 - Stack stores metadata about a data structure
                   (in this case 'numbers')
@@ -35,54 +39,67 @@ use std::io::Error;
 */
 
 /*
-    ### 74. + 75. (AGAIN) ###
+    ### 74. Strings, String Refs, and String Slices ###
         - String
-            - Struct (pointer to value | length | capacity) in Stack
+            - Struct (pointer to text | length of string in
+              heap | capacity of string in heap) in Stack
             - Pointer points to value in 'Heap'
-            - Uses memory in Stack & Heap
+            - Uses memory in 'Stack' & 'Heap'
         - &String
-            - Reference to 'String' | Stored in Stack
-            - Uses memory in Stack
-        - &str (String slice)
-            - Struct (pointer to value | length) in Stack
+            - Reference (read-only) to 'String' (All the work
+              of String + REFERENCE) | Stored in Stack
+            - Uses memory in 'Stack'
+        - &str (String slice - read-only)
+            - Struct (pointer to text | length of string) in
+              Stack
             - Pointer points to value in 'Heap' or 'Data'
               (Heap-allocated or Data-allocated text)
-            - Uses memory in Stack
+            - Uses memory in 'Stack'
+            - String to String slice
+                let color = String::from("red");
+                let c = color.as_str();
+                    - In this case 'c' points to "red" in 'Heap'!
+*/
 
-        - String to String slice
-            let color = String::from("red");
-            let c = color.as_str();
-                - In this case 'c' points to "red" in 'Heap'!
-
+/*
+    ### 75. When to Use Which String ###
         - &String and &str - both provide a read-only reference to text
           data - Why two different types?
             - &str lets you refer to text in the data segment without a
               'Heap' allocation => slightly more performant
-                - If we do it solely via String, it will be a lot more
+                let color = "red";
+                - If we do it solely via 'String', it will be a lot more
                   work
             - &str lets you 'slice' (take a portion) of text that is
               already on the heap
+              let color = String::from("blue"); => String
+              let portion = &color[1..4]; => &str
+              - When we do &color[1..4], behind the scenes '&str' is
+                created in Stack and &color[1..4] refers to 'lue'
+                portion of the same heap-allocated 'blue'
+              - Again, it will be a lot more work is we do this via
+                'String'
 
-        - Using String
-            let color = String::from("red");
-            - Use anytime we want ownership of text
-            - Use anytime we want text that can grow or shrink
+        - Usage
+            - String
+                let color = String::from("red");
+                - Use anytime we want ownership of text
+                - Use anytime we want text that can grow or shrink
+            - &String
+                let color = String::from("red");
+                let color_ref = &color;
+                - Rarely used (usually never)
+                - Rust will automatically turn &String into &str for you
+            - &str
+                let color = String::from("red");
+                let c = color.as_str();
+                - Use anytime you don't want to take ownership of text
+                - Use anytime you want to refer to a 'portion' of a string
+                owned by something else.
 
-        - Using &String
-            let color = String::from("red");
-            let color_ref = &color;
-            - Rarely used (usually never)
-            - Rust will automatically turn &String into &str for you
+        - String slices can either point at text stored in the 'Data
+          segment' or text stored in the 'Heap' that belongs to a String
 
-        - Using &str
-            let color = String::from("red");
-            let c = color.as_str();
-            - Use anytime you don't want to take ownership of text
-            - Use anytime you want to refer to a portion of a string
-              owned by something else.
-
-        - String slices can either point at text stored in the data
-          segment or text stored in the heap that belongs to a String
 */
 
 fn string_test(a: String, b: &String, c: &str) {
