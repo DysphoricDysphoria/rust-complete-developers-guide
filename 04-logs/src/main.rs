@@ -250,6 +250,16 @@ fn extract_errors(text: &str) -> Vec<String> {
               assigned to variable
             - Function returns Err(...) => unwrapping => value
               returned
+
+    ### When to use match/if let, unwrap etc. and try ###
+        - Use a match or 'if let' statement when we're ready
+          to meaningfully deal with an error
+        - Call 'unwrap()' or 'expect()' on the Result for
+          quick debugging, or if you want to crash on an
+          Err()
+        - Use the try operator ('?') to unwrap or propagate
+          the Result when we don't have any way to handle
+          the error in the current function
 */
 fn main() -> Result<(), Error> {
     read_file_via_match();
