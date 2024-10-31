@@ -171,6 +171,26 @@ fn string_demo_1() {
 }
 
 fn extract_errors(text: &str) -> Vec<String> {
+    /*
+        ### 77. Understanding the Issue ###
+            - Python: When we split a string we copy the split
+              string items into an array.
+            - Rust: When we split a string we get a vector of
+              String slices Vec<&str> which refer to parts/slices
+              of the original string.
+                - Every 'String slice' points to the first
+                  character of the word in the original string?
+            - 'split_text' binding => Vec<&str>; &str => refers to
+              portions of the original string
+            - 'results' binding => Vec<&str>; &str => refers to
+              portions of the original string which start with 'ERROR'
+                - In the 'for' loop we are COPYING the reference
+            - Issue: When an owner goes out of scope, the value
+              owned by it is dropped (cleaned up in memory)
+                - We have Vec<&str>; &str points to something that
+                  doesn't exist anymore!
+            - Solution: results => Vec<String>; line.to_string()
+    */
     let split_text = text.split("\n");
 
     let mut results = vec![];
@@ -185,8 +205,6 @@ fn extract_errors(text: &str) -> Vec<String> {
 }
 
 fn main() {
-    let mut error_logs = vec![];
-
     match fs::read_to_string("logs.txt") {
         Ok(text_that_was_read) => {
             println!("{}", text_that_was_read.len());
@@ -198,16 +216,16 @@ fn main() {
                 - Also, why does &String::from(text_that_was_read)
                   throws an error?
                     - extract_errors(text: &str) -> Vec<&str>
-                    - results.push(line.to_string())
+                    - results.push(line)
             */
-            error_logs = extract_errors(text_that_was_read.as_str());
+            let error_logs = extract_errors(text_that_was_read.as_str());
+
+            println!("{:#?}", error_logs);
         }
         Err(reason_text_was_not_read) => {
             println!("Failed to read file: {}", reason_text_was_not_read)
         }
     }
-
-    println!("{:#?}", error_logs);
 
     println!();
 
