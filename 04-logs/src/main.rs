@@ -236,16 +236,35 @@ fn extract_errors(text: &str) -> Vec<String> {
     results
 }
 
-fn main() {
+/*
+    ### Returning from main ###
+        - Optionally, we can return a 'Result' from main.
+        - If we return an Ok variant, Rust won't do anything.
+        - If we return an Err variant, Rust will print the
+          value in the Err variant.
+
+    ### try (?) operator ###
+        - ? operator gets added onto functions that return
+          a Result
+            - Function returns Ok(...) => unwrapping => value
+              assigned to variable
+            - Function returns Err(...) => unwrapping => value
+              returned
+*/
+fn main() -> Result<(), Error> {
     read_file_via_match();
 
     read_file_via_expect();
 
-    println!();
-
     result_demo_1();
 
     string_demo_1();
+
+    let text = fs::read_to_string("logs.txt")?;
+    let error_logs = extract_errors(text.as_str());
+    fs::write("errors-3.txt", error_logs.join("\n"))?;
+
+    Ok(())
 }
 
 // Result is a generic 'enum'
