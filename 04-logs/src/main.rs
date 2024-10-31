@@ -207,9 +207,6 @@ fn extract_errors(text: &str) -> Vec<String> {
 fn main() {
     match fs::read_to_string("logs.txt") {
         Ok(text_that_was_read) => {
-            println!("{}", text_that_was_read.len());
-            println!();
-
             /*
                 - We could have also used '&text_that_was_read';
                   'text_that_was_read.as_str()'
@@ -220,7 +217,12 @@ fn main() {
             */
             let error_logs = extract_errors(text_that_was_read.as_str());
 
-            println!("{:#?}", error_logs);
+            match fs::write("errors.txt", error_logs.join("\n")) {
+                Ok(..) => println!("Wrote errors.txt"),
+                Err(reason_write_failed) => {
+                    println!("Writing of errors.txt failed: {}", reason_write_failed)
+                }
+            }
         }
         Err(reason_text_was_not_read) => {
             println!("Failed to read file: {}", reason_text_was_not_read)
