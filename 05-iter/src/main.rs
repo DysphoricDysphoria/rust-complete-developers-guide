@@ -17,7 +17,22 @@
         like 'for_each', 'collect', 'map', etc.
 */
 
-fn print_elements(elements: &Vec<String>) {
+// TODO: Clippy with rust-analyzer?
+
+/*
+    ### Vector slice - &[<Type>] ###
+        - Vec<String> => &[String]
+        - It is a struct
+            - Pointer to data
+            - Length
+        - Similar to 'String slice' and avoids the same
+        set of problems
+        - Why use 'print_elements' with Vector slice?
+            - Single function that can work with either
+            a full vector or just a portion of a vector
+*/
+
+fn print_elements(elements: &[String]) {
     /*
         ### for loop will ... ###
             - Automatically create an iterator for the
@@ -68,12 +83,18 @@ fn print_elements(elements: &Vec<String>) {
 
 fn main() {
     let colors = vec![
-        String::from("red"),
-        String::from("green"),
         String::from("blue"),
+        String::from("green"),
+        String::from("red"),
     ];
 
+    // With 'print_elements(elements: &Vec<String>)'
+    // we are only allowed to pass in the full Vector.
+    // If we modify it to 'print_elements(elements:
+    // &[String])', we can pass in a portion of the
+    // Vector as well
     print_elements(&colors);
+    print_elements(&colors[1..3]);
 
     println!();
 
