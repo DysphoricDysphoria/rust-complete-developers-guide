@@ -105,16 +105,16 @@ fn main() {
 
     /*
         - colors.iter() creates a new data structure
-          Iter<String>
+        Iter<String>
             - Iter is separate from the Vector etc.
-              we are iterating over
+            we are iterating over
             - Iter is a struct which has a couple
-              of fields inside it
+            of fields inside it
                 - Pointer to data (Vec<String>, in this
-                  case)
+                case)
                 - Pointer to current position ("red")
                 - Pointer to end (pointing outside the
-                  bounds of vector)
+                bounds of vector)
             - next() => Some() or None
     */
     let mut colors_iter = colors.iter();
