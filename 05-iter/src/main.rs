@@ -143,6 +143,7 @@ fn main() {
     println!();
 
     shorten_string(&mut colors);
+    // shorten_string(&mut colors[1..3]); // We can also pass a portion of colors as well.
 
     println!("{:#?}", colors);
 }
