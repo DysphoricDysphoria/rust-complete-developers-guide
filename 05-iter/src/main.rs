@@ -81,22 +81,27 @@ fn print_elements(elements: &[String]) {
     }
 }
 
+fn shorten_string(elements: &mut Vec<String>) {
+    /*
+        - iter()
+            - This will give us a read-only reference
+            to each element
+        - iter_mut()
+            - This will give us a mutable reference to
+            each element
+        - into_iter()
+            - This will give us ownership of each elem,
+            unless called on a mutable ref to a vector
+    */
+    elements.iter_mut().for_each(|el| el.truncate(1));
+}
+
 fn main() {
-    let colors = vec![
+    let mut colors = vec![
         String::from("blue"),
         String::from("green"),
         String::from("red"),
     ];
-
-    // With 'print_elements(elements: &Vec<String>)'
-    // we are only allowed to pass in the full Vector.
-    // If we modify it to 'print_elements(elements:
-    // &[String])', we can pass in a portion of the
-    // Vector as well
-    print_elements(&colors);
-    print_elements(&colors[1..3]);
-
-    println!();
 
     /*
         - colors.iter() creates a new data structure
@@ -121,4 +126,23 @@ fn main() {
     println!("colors_iter.next() {:#?}", colors_iter.next());
     println!("colors_iter.next() {:#?}", colors_iter.next());
     println!("colors_iter.next() {:#?}", colors_iter.next());
+
+    println!();
+
+    // With 'print_elements(elements: &Vec<String>)'
+    // we are only allowed to pass in the full Vector.
+    // If we modify it to 'print_elements(elements:
+    // &[String])', we can pass in a portion of the
+    // Vector as well
+    print_elements(&colors);
+
+    println!();
+
+    print_elements(&colors[1..3]);
+
+    println!();
+
+    shorten_string(&mut colors);
+
+    println!("{:#?}", colors);
 }
