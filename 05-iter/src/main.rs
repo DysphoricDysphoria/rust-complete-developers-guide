@@ -81,7 +81,7 @@ fn print_elements(elements: &[String]) {
     }
 }
 
-fn shorten_string(elements: &mut Vec<String>) {
+fn shorten_string(elements: &mut [String]) {
     /*
         - iter()
             - This will give us a read-only reference
