@@ -2,7 +2,7 @@ use std::fs;
 use std::io::Error;
 
 /*
-    ### 73. The Stack and Heap (AGAIN) ###
+    ### 73. The Stack and Heap ###
         - Stack
             - Fast, but limited size (2 - 8 MB)
         - Heap
@@ -18,7 +18,7 @@ use std::io::Error;
                 - The initial values 1, 2, 3, 4, 5 will be stored
                   into 'Data' and when we make the vector, these
                   will be copied into the 'Heap'
-                  - ? => during parsing, rust might create 1 - 5
+                  - During parsing, rust might create 1 - 5
                     in 'Data' and then later copy it into the 'Heap'?
             - Super common pattern
                 - Stack stores metadata about a data structure
@@ -45,8 +45,8 @@ use std::io::Error;
               heap | capacity of string in heap) in Stack
             - Pointer points to value in 'Heap'
             - Uses memory in 'Stack' & 'Heap'
-        - &String
-            - Reference (read-only) to 'String' (All the work
+        - &String (read-only)
+            - Reference to 'String' (All the work
               of String + REFERENCE) | Stored in Stack
             - Uses memory in 'Stack'
         - &str (String slice - read-only)
@@ -67,18 +67,17 @@ use std::io::Error;
           data - Why two different types?
             - &str lets you refer to text in the data segment without a
               'Heap' allocation => slightly more performant
-                let color = "red";
                 - If we do it solely via 'String', it will be a lot more
                   work
             - &str lets you 'slice' (take a portion) of text that is
               already on the heap
-              let color = String::from("blue"); => String
-              let portion = &color[1..4]; => &str
-              - When we do &color[1..4], behind the scenes '&str' is
-                created in Stack and &color[1..4] refers to 'lue'
-                portion of the same heap-allocated 'blue'
-              - Again, it will be a lot more work is we do this via
-                'String'
+                let color = String::from("blue"); => String
+                let portion = &color[1..4]; => &str
+                - When we do &color[1..4], behind the scenes '&str' is
+                  created in Stack and &color[1..4] refers to 'lue'
+                  portion of the same heap-allocated 'blue'
+                - Again, it will be a lot more work is we do this via
+                  'String'
 
         - Usage
             - String
@@ -137,9 +136,9 @@ fn result_demo_1() {
 
     let ingredients = vec![
         String::from("Cheese"),
-        String::from("Tomato"),
-        String::from("Salt"),
         String::from("Onions"),
+        String::from("Salt"),
+        String::from("Tomato"),
     ];
 
     match validate_ingredients(&ingredients) {
@@ -161,13 +160,47 @@ fn string_demo_1() {
 
     // Here, in case of 3rd parameter rust is automatically
     // converting &String to &str.
-    // If we pass reference to a String and a String slice
+    // If we pass reference to a String and a 'String slice'
     // is expected, rust will automatically do that for us.
     string_test(
         "blue".to_string(),
         &String::from("blue"),
         &String::from("blue"),
     );
+}
+
+fn extract_errors(text: &str) -> Vec<String> {
+    /*
+        ### 77. Understanding the Issue ###
+            - Python: When we split a string we copy the split
+              string items into an array.
+            - Rust: When we split a string we get a vector of
+              String slices Vec<&str> which refer to parts/slices
+              of the original string.
+                - Every 'String slice' points to the first
+                  character of the word
+            - 'split_text' binding => Vec<&str>; &str => refers to
+              portions of the original string
+            - 'results' binding => Vec<&str>; &str => refers to
+              portions of the original string which start with 'ERROR'
+                - In the 'for' loop we are COPYING the reference
+            - Issue: When an owner goes out of scope, the value
+              owned by it is dropped (cleaned up in memory)
+                - We have Vec<&str>; &str points to something that
+                  doesn't exist anymore!
+            - Solution: results => Vec<String>; line.to_string()
+    */
+    let split_text = text.split("\n");
+
+    let mut results = vec![];
+
+    for line in split_text {
+        if line.starts_with("ERROR") {
+            results.push(line.to_string());
+        }
+    }
+
+    results
 }
 
 fn read_file_via_match() {
@@ -202,40 +235,6 @@ fn read_file_via_expect() {
     fs::write("errors-2.txt", error_logs.join("\n")).expect("failed to write errors-2.txt");
 }
 
-fn extract_errors(text: &str) -> Vec<String> {
-    /*
-        ### 77. Understanding the Issue ###
-            - Python: When we split a string we copy the split
-              string items into an array.
-            - Rust: When we split a string we get a vector of
-              String slices Vec<&str> which refer to parts/slices
-              of the original string.
-                - Every 'String slice' points to the first
-                  character of the word in the original string?
-            - 'split_text' binding => Vec<&str>; &str => refers to
-              portions of the original string
-            - 'results' binding => Vec<&str>; &str => refers to
-              portions of the original string which start with 'ERROR'
-                - In the 'for' loop we are COPYING the reference
-            - Issue: When an owner goes out of scope, the value
-              owned by it is dropped (cleaned up in memory)
-                - We have Vec<&str>; &str points to something that
-                  doesn't exist anymore!
-            - Solution: results => Vec<String>; line.to_string()
-    */
-    let split_text = text.split("\n");
-
-    let mut results = vec![];
-
-    for line in split_text {
-        if line.starts_with("ERROR") {
-            results.push(line.to_string());
-        }
-    }
-
-    results
-}
-
 /*
     ### Returning from main ###
         - Optionally, we can return a 'Result' from main.
@@ -262,13 +261,13 @@ fn extract_errors(text: &str) -> Vec<String> {
           the error in the current function
 */
 fn main() -> Result<(), Error> {
-    read_file_via_match();
-
-    read_file_via_expect();
-
     result_demo_1();
 
     string_demo_1();
+
+    read_file_via_match();
+
+    read_file_via_expect();
 
     let text = fs::read_to_string("logs.txt")?;
     let error_logs = extract_errors(text.as_str());
