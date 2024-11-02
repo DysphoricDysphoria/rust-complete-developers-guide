@@ -123,6 +123,27 @@ fn to_uppercase(elements: &[String]) -> Vec<String> {
     elements.iter().map(|el| el.to_uppercase()).collect() // collect() is an iterator 'consumer'
 }
 
+/*
+    ### into_iter() will give you something different
+    depending on how its called ###
+        - '&colors.into_iter()' - Iterator created out
+        of a reference - Iterator will produce refs to
+        each value
+        - '&mut colors.into_iter()' - Iterator created
+        out of a mutable reference - Iterator will
+        produce mutable refs to each value
+        - 'colors.into_iter()' - Iterator created out
+        of a value - Iterator will produce each value.
+        Also moves ownership of these values.
+        - Heretic => call 'into_iter' with values and not
+        with reference or mutable reference
+
+*/
+
+fn move_elements(vec_a: Vec<String>, vec_b: &mut Vec<String>) {
+    vec_a.into_iter().for_each(|el| vec_b.push(el));
+}
+
 fn main() {
     let mut colors = vec![
         String::from("blue"),
@@ -183,4 +204,12 @@ fn main() {
     println!();
 
     println!("Colors: {:#?}", colors);
+
+    println!();
+
+    let mut destination = vec![];
+
+    move_elements(colors, &mut destination);
+
+    println!("Destination {:#?}", destination);
 }
