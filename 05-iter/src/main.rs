@@ -96,6 +96,10 @@ fn shorten_string(elements: &mut [String]) {
     elements.iter_mut().for_each(|el| el.truncate(1));
 }
 
+fn to_uppercase(elements: &[String]) -> Vec<String> {
+    elements.iter().map(|el| el.to_uppercase()).collect() // collect() is an iterator 'consumer'
+}
+
 fn main() {
     let mut colors = vec![
         String::from("blue"),
@@ -142,8 +146,18 @@ fn main() {
 
     println!();
 
-    shorten_string(&mut colors);
-    // shorten_string(&mut colors[1..3]); // We can also pass a portion of colors as well.
+    // shorten_string(&mut colors);
+    shorten_string(&mut colors[1..2]); // We can also pass a portion of colors as well.
 
-    println!("{:#?}", colors);
+    println!("Colors (shorten_string): {:#?}", colors);
+
+    println!();
+
+    let upper_cased = to_uppercase(&colors);
+
+    println!("Upper cased: {:#?}", upper_cased);
+
+    println!();
+
+    println!("Colors: {:#?}", colors);
 }
