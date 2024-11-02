@@ -151,6 +151,29 @@ fn explode(elements: &[String]) -> Vec<Vec<String>> {
         .collect()
 }
 
+fn find_color_or(elements: &[String], search: &str, fallback: &str) -> String {
+    /*
+        - ### find ###
+            - Calls 'next' on the iterator until it gets
+            an element that returns a truthy value from
+            the closure function
+            - Returns an 'Option' Some(value) if it found
+            something. None if it didn't find anything
+        - ### map_or ###
+            - It is a method that belongs to the 'Option'
+            enum
+            - If the Option is a None, it will return the
+            first argument
+            - If the Option is a Some, it will return the
+            value out of the Some and run it through the
+            closure
+    */
+    elements
+        .iter()
+        .find(|el| el.contains(search))
+        .map_or(String::from(fallback), |el| el.to_string())
+}
+
 fn main() {
     let mut colors = vec![
         String::from("blue"),
@@ -206,7 +229,7 @@ fn main() {
 
     let upper_cased = to_uppercase(&colors);
 
-    println!("Upper cased: {:#?}", upper_cased);
+    println!("Color (to_uppercase - new vector): {:#?}", upper_cased);
 
     println!();
 
@@ -218,11 +241,17 @@ fn main() {
 
     move_elements(colors, &mut destination);
 
-    println!("Destination {:#?}", destination);
+    println!("Destination: {:#?}", destination);
 
     println!();
 
     let exploded = explode(&destination);
 
     println!("Exploded: {:#?}", exploded);
+
+    println!();
+
+    let found_color = find_color_or(&destination, "ry", "orange");
+
+    println!("Found color: {}", found_color);
 }
