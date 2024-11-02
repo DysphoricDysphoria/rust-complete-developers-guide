@@ -97,6 +97,29 @@ fn shorten_string(elements: &mut [String]) {
 }
 
 fn to_uppercase(elements: &[String]) -> Vec<String> {
+    /*
+        ### How Collect Works ###
+            - Iterator can be used to iterate over many kind of data
+            structures
+                - Vec<String>, HashMap (Dictionary/Object), Doubly
+                Linked List etc.
+            - Likewise, 'collect' can gather values into many different
+            kinds of data structures - Vec<String>, HashMap ...
+            - How does 'collect' decide what kind of structure its going
+            to create?
+                - What am I collecting everything into?
+                - Oh, this function is supposed to return a Vector. Guess
+                I'll make a Vec
+                - Other ways:
+                    - Variable type declaration
+                        - const uppercaseElem: Vec<String> = elem...
+                    - Generics => collect::<Vec<String>>
+                        - 'Turbofish' syntax
+                    - Generics + type inference => collect::<Vec<_>>
+            - The types we add can modify our code. In other languages
+            like typed Python or TypeScript, types are only USED for
+            type checking.
+    */
     elements.iter().map(|el| el.to_uppercase()).collect() // collect() is an iterator 'consumer'
 }
 
