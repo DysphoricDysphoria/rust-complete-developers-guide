@@ -1,17 +1,89 @@
 use num_traits::ToPrimitive;
 
-fn solve(a: f64, b: f64) -> f64 {
-    (a.powi(2) + b.powi(2)).sqrt()
+/*
+    ### 'solve' function ###
+        - First version - We can pass in both f32 & f64 via
+        'Float' trait
+        - Second version - We can pass in any type of number
+        via 'ToPrimitive' trait
+
+    ### Trait bounds ###
+        - 'Float' is a 'trait'
+        - 'Float' is being used as a 'trait bound'
+        - ### What is a trait? ###
+        - A trait is a set of methods
+        - It can contain abstract methods which don't have
+        implementation
+        - It can contain default methods which have
+        implementation
+
+        - A struct/enum/primitive can implement a trait
+        - The implementor has to provide an implementation
+        for all of the abstract methods
+        - The implementor can optionally override the
+        default methods
+
+        - Behind the scenes, f32 and f64 both implement the
+        'Float' trait
+
+    ### Super Solve Flexibility ###
+        - Modify 'Float' trait to 'ToPrimitive'
+*/
+
+trait Vehicle {
+    // Abstract method
+    fn start(&self);
+
+    // Default method
+    fn stop(&self) {
+        println!("Stopped");
+    }
+}
+
+struct Car {}
+
+impl Vehicle for Car {
+    fn start(&self) {
+        println!("Started");
+    }
+}
+
+// TODO: Can we just use 'T: ToPrimitive' and pass in a float
+// and an integer
+fn solve<T: ToPrimitive, U: ToPrimitive>(a: T, b: U) -> f64 {
+    // Works with 'use num_traits::ToPrimitive;'
+    let a_f64 = a.to_f64().unwrap(); // !Error: 'a as f64'
+
+    // Works with 'use num_traits::ToPrimitive;'
+    let b_f64 = b.to_f64().unwrap();
+
+    (a_f64.powi(2) + b_f64.powi(2)).sqrt()
+}
+
+fn start_and_stop<T: Vehicle>(vehicle: T) {
+    vehicle.start();
+    vehicle.stop();
 }
 
 fn main() {
-    // Can't take different type of numbers and
-    // do arithmetic on them.
+    // Can't take different type of numbers and do
+    // arithmetic on them
     let a: f32 = 3.0;
-    let b: f32 = 4.0;
+    let b: f64 = 4.0;
 
-    let a_f64 = a as f64;
-    let b_f64 = b.to_f64().unwrap(); // Works with 'use num_traits::ToPrimitive;'
+    println!("{}", solve::<f32, f64>(a, b));
 
-    println!("{}", solve(a_f64, b_f64));
+    // Here, we are relying upon inference
+    println!("{}", solve(6.0, 8.0));
+
+    println!();
+
+    let car = Car {};
+    start_and_stop(car);
+
+    println!();
+
+    // Super solve flexibility (with 'ToPrimitive')
+    // This won't work with 'Float' trait
+    println!("{}", solve(30, 40.0));
 }
