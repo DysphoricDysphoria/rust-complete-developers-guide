@@ -1,5 +1,6 @@
 use super::container::Container;
 
+#[derive(Debug)]
 pub struct Stack<T> {
     items: Vec<T>,
 }
