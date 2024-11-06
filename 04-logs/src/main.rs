@@ -173,21 +173,21 @@ fn extract_errors(text: &str) -> Vec<String> {
     /*
         ### 77. Understanding the Issue ###
             - Python: When we split a string we copy the split
-              string items into an array.
+            string items into an array.
             - Rust: When we split a string we get a vector of
-              String slices Vec<&str> which refer to parts/slices
-              of the original string.
+            String slices Vec<&str> which refer to parts/slices
+            of the original string.
                 - Every 'String slice' points to the first
-                  character of the word
+                character of the word
             - 'split_text' binding => Vec<&str>; &str => refers to
-              portions of the original string
+            portions of the original string
             - 'results' binding => Vec<&str>; &str => refers to
-              portions of the original string which start with 'ERROR'
+            portions of the original string which start with 'ERROR'
                 - In the 'for' loop we are COPYING the reference
             - Issue: When an owner goes out of scope, the value
-              owned by it is dropped (cleaned up in memory)
+            owned by it is dropped (cleaned up in memory)
                 - We have Vec<&str>; &str points to something that
-                  doesn't exist anymore!
+                doesn't exist anymore!
             - Solution: results => Vec<String>; line.to_string()
     */
     let split_text = text.split("\n");
@@ -208,9 +208,9 @@ fn read_file_via_match() {
         Ok(text_that_was_read) => {
             /*
                 - We could have also used '&text_that_was_read';
-                  'text_that_was_read.as_str()'
+                'text_that_was_read.as_str()'
                 - Also, why does &String::from(text_that_was_read)
-                  throws an error?
+                throws an error?
                     - extract_errors(text: &str) -> Vec<&str>
                     - results.push(line)
             */
@@ -240,25 +240,25 @@ fn read_file_via_expect() {
         - Optionally, we can return a 'Result' from main.
         - If we return an Ok variant, Rust won't do anything.
         - If we return an Err variant, Rust will print the
-          value in the Err variant.
+        value in the Err variant.
 
     ### try (?) operator ###
         - ? operator gets added onto functions that return
-          a Result
+        a Result
             - Function returns Ok(...) => unwrapping => value
-              assigned to variable
+            assigned to variable
             - Function returns Err(...) => unwrapping => value
-              returned
+            returned
 
     ### When to use match/if let, unwrap etc. and try ###
         - Use a match or 'if let' statement when we're ready
-          to meaningfully deal with an error
+        to meaningfully deal with an error
         - Call 'unwrap()' or 'expect()' on the Result for
-          quick debugging, or if you want to crash on an
-          Err()
+        quick debugging, or if you want to crash on an
+        Err()
         - Use the try operator ('?') to unwrap or propagate
-          the Result when we don't have any way to handle
-          the error in the current function
+        the Result when we don't have any way to handle
+        the error in the current function
 */
 fn main() -> Result<(), Error> {
     result_demo_1();
