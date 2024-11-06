@@ -18,7 +18,7 @@ use std::io::Error;
                 - The initial values 1, 2, 3, 4, 5 will be stored
                 into 'Data' and when we make the vector, these
                 will be copied into the 'Heap'
-                    - During parsing, rust might create 1 - 5
+                    - During parsing, Rust might create 1 - 5
                     in 'Data' and then later copy it into the 'Heap'?
             - Super common pattern
                 - Stack stores metadata about a data structure
