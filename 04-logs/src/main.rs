@@ -102,7 +102,7 @@ use std::io::Error;
 */
 
 fn string_test(a: String, b: &String, c: &str) {
-    println!("{} {} {}", a, b, c)
+    println!("{} {} {}", a, b, c);
 }
 
 /*
