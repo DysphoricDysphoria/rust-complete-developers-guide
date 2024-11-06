@@ -99,7 +99,6 @@ use std::io::Error;
         - String slice (&str) can either point at text stored in the 
         'Data segment' or text stored in the 'Heap' that belongs to 
         a String
-
 */
 
 fn string_test(a: String, b: &String, c: &str) {
