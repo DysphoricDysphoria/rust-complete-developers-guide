@@ -76,7 +76,7 @@ use std::io::Error;
                 - When we do &color[1..4], behind the scenes '&str' is
                 created in Stack and &color[1..4] refers to 'lue'
                 portion of the same heap-allocated 'blue'
-                - Again, it will be a lot more work is we do this via
+                - Again, it will be a lot more work if we do this via
                 'String'
 
         - Usage
