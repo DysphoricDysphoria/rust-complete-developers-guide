@@ -95,8 +95,8 @@ use std::io::Error;
                 - Use anytime you don't want to take ownership of text
                 - Use anytime you want to refer to a 'portion' of a string
                 owned by something else.
-
-        - String slice (&str) can either point at text stored in the 
+        
+        - String slice (&str) can either point at text stored in the
         'Data segment' or text stored in the 'Heap' that belongs to 
         a String
 */
