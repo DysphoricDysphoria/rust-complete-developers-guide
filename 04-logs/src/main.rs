@@ -1,3 +1,4 @@
+// use std::{fs, io::Error};
 use std::fs;
 use std::io::Error;
 
@@ -178,11 +179,12 @@ fn extract_errors(text: &str) -> Vec<String> {
             String slices Vec<&str> which refer to parts/slices
             of the original string.
                 - Every 'String slice' points to the first
-                character of the word
-            - 'split_text' binding => Vec<&str>; &str => refers to
-            portions of the original string
+                character of the split word
+            - 'split_text' binding => Vec<&str>; &str => refers
+            to portions of the original string
             - 'results' binding => Vec<&str>; &str => refers to
-            portions of the original string which start with 'ERROR'
+            portions of the original string which start with
+            'ERROR'
                 - In the 'for' loop we are COPYING the reference
             - Issue: When an owner goes out of scope, the value
             owned by it is dropped (cleaned up in memory)
@@ -211,8 +213,8 @@ fn read_file_via_match() {
                 'text_that_was_read.as_str()'
                 - Also, why does &String::from(text_that_was_read)
                 throws an error?
-                    - extract_errors(text: &str) -> Vec<&str>
-                    - results.push(line)
+                    extract_errors(text: &str) -> Vec<&str>
+                    results.push(line)
             */
             let error_logs = extract_errors(text_that_was_read.as_str());
 
@@ -243,14 +245,15 @@ fn read_file_via_expect() {
         value in the Err variant.
 
     ### try (?) operator ###
-        - ? operator gets added onto functions that return
+        - '?' operator gets added onto functions that return
         a Result
-            - Function returns Ok(...) => unwrapping => value
+            - Function returns Ok(..) => unwrapping => value
             assigned to variable
-            - Function returns Err(...) => unwrapping => value
+            - Function returns Err(..) => unwrapping => value
             returned
 
-    ### When to use match/if let, unwrap etc. and try ###
+    ### When to use 1. match/if let 2. unwrap etc. and
+    3. try ###
         - Use a match or 'if let' statement when we're ready
         to meaningfully deal with an error
         - Call 'unwrap()' or 'expect()' on the Result for
