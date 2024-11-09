@@ -5,7 +5,7 @@
         behind the scenes when you write a for loop
         - Follow all the same rules of ownership,
         borrowing, lifetimes
-        - Use the Option enum
+        - Use the 'Option' enum
 */
 
 /*
@@ -27,42 +27,44 @@
             - Length
         - Similar to 'String slice' and avoids the same
         set of problems
-        - Why use 'print_elements' with Vector slice?
+        - Why use 'print_elements' with 'Vector slice'?
             - Single function that can work with either
             a full vector or just a portion of a vector
 */
 
 fn print_elements(elements: &[String]) {
-    /*
-        ### for loop will ... ###
-            - Automatically create an iterator for the
-            vector
-            - Call 'next' on the vector and unwrap the
-            Option that comes back
-            - Break once 'next' returns a None
-    */
     let use_for_loop = false;
 
     if use_for_loop {
+        /*
+            ### for loop will ... ###
+                - Automatically create an iterator for the
+                vector
+                - Call 'next' on the vector and unwrap the
+                Option that comes back
+                - Break once 'next' returns a None
+        */
         for element in elements {
             println!("{}", element);
         }
     } else {
-        /*
-            ### Iterator consumers ###
-                - Iterators are 'lazy'. Nothing happens until...
-                    - We call 'next'
-                    - We use a function that calls 'next' automatically
-                        - These functions are called consumers (they
-                        are (kinda?) consuming values out of the
-                        iterator). Ex: for_each()
-                        - for_each() is an iterator 'consumer'
-                        - It will repeatedly call 'next()' on the
-                        iterator until it gets 'None'
-        */
-        let use_iter_adaptor = true;
+        let use_iter_consumer = true;
 
-        if use_iter_adaptor {
+        if use_iter_consumer {
+            /*
+                ### Iterator consumers ###
+                    - Iterators are 'lazy'. Nothing happens until...
+                        - We call 'next'
+                        - We use a function that calls 'next' automatically
+                            - These functions are called consumers (they
+                            are (kinda?) consuming values out of the
+                            iterator). Ex: for_each()
+                            - for_each() is an iterator 'consumer'
+                            - It will repeatedly call 'next()' on the
+                            iterator until it gets 'None'
+            */
+            elements.iter().for_each(|el| println!("{}", el));
+        } else {
             /*
                 ### Iterator adaptors ###
                     - .map() is an iterator adaptor
@@ -75,8 +77,6 @@ fn print_elements(elements: &[String]) {
                 .iter()
                 .map(|el| format!("{} {}", el, el))
                 .for_each(|el| println!("{}", el)); // '|el| func body...' is a closure function
-        } else {
-            elements.iter().for_each(|el| println!("{}", el));
         }
     }
 }
