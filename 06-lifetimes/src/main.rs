@@ -19,7 +19,7 @@
         assumption => Rust assumes that the return ref
         will point at data referred to by one of the
         arguments
-        - Rust will not analyze the body of your function
+        - Rust will not analyze the body of our function
         to figure out whether the return ref is pointing
         at the first or second arg
             - Rust still wants to know whether the
@@ -47,12 +47,12 @@
             the returned ref uses the first or second arg.
             In this case, we won't know which code would
             work and which not.
-                - With lifetime annotation:
-                    fn split<'a>(s: &'a str, pattern: &str)
-                    -> &'a str {}
-                - Without lifetime annotation:
-                    fn split(s: &str, pattern: &str)
-                    -> &str
+            - WITH lifetime annotation:
+                fn split<'a>(s: &'a str, pattern: &str) ->
+                &'a str {}
+            - WITHOUT lifetime annotation:
+                fn split(s: &str, pattern: &str) ->
+                &str
 
     ### Lifetime Elision ###
         - If we have a function that takes in one ref
@@ -84,12 +84,11 @@
             - Pronunciation => eeh-lah-eed (elide)
 
         - Adding lifetime annotations doesn't change how
-        your code actually runs at all. It doesn't prolong
-        a reference, it doesn't make it live longer or
-        anything like that.
-            - It is communicating the relationship b/w the
-            returned reference and the argument
-            reference(s).
+        our code runs at all. It doesn't prolong a
+        reference, it doesn't make it live longer or
+        anything like that. => It is communicating the
+        relationship b/w the returned reference and the
+        argument reference(s).
 
 */
 
@@ -114,6 +113,9 @@ fn next_language<'a>(languages: &'a [String], current: &str) -> &'a str {
     languages.last().unwrap()
 }
 
+// We are omitting lifetime annotation here.
+// Why? => 'Function that takes one ref + any number
+// of values + returns a ref'
 fn last_language(languages: &[String]) -> &str {
     languages.last().unwrap()
 }
