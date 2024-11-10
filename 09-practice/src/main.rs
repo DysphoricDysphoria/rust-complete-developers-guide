@@ -53,7 +53,7 @@ fn print_elements(elements: &[String]) {
         if use_iter_consumer {
             /*
                 ### Iterator consumers ###
-                    - Iterators are 'lazy', Nothing happens until...
+                    - Iterators are 'lazy'. Nothing happens until...
                         - We call 'next'
                         - We use a function that calls 'next' automatically
                             - These functions are called consumers (they
@@ -64,19 +64,123 @@ fn print_elements(elements: &[String]) {
                             iterator until it gets 'None'
             */
             elements.iter().for_each(|el| println!("{}", el));
+        } else {
+            /*
+                ### Iterator adaptors ###
+                    - .map() is an iterator 'adaptor'
+                    - Adaptors create a step in a processing pipeline,
+                    but don't actually cause any iteration
+                    - .map() transforms each item (a copy?) of 'element'
+                    and forwards it to 'for_each'
+            */
+            elements
+                .iter()
+                .map(|el| format!("{} {}", el, el))
+                .for_each(|el| println!("{}", el)); // '|el| func body...' is a closure function
         }
     }
 }
 
+fn shorten_string(elements: &mut [String]) {
+    /*
+        - iter()
+            - This will give us a read-only reference
+            to each element
+        - iter_mut()
+            - This will give us a mutable reference to
+            each element
+        - into_iter()
+            - This will give us ownership of each elem,
+            unless called on a mutable ref to a vector
+    */
+    elements.iter_mut().for_each(|el| el.truncate(1));
+}
+
+fn to_uppercase(elements: &[String]) -> Vec<String> {
+    /*
+        ### How Collect Works ###
+            - Iterator can be used to iterate over many kind of data
+            structures
+                - Vec<String>, HashMap (Dictionary/Object), Doubly
+                Linked List etc.
+            - Likewise, 'collect' can gather values into many different
+            kinds of data structures - Vec<String>, HashMap ...
+            - How does 'collect' decide what kind of structure its going
+            to create?
+                - What am I collecting everything into?
+                - Oh, this function is supposed to return a Vector. Guess
+                I'll make a Vector
+                - Other ways:
+                    - Variable type declaration
+                        - const uppercaseElem: Vec<String> = elem...
+                    - Generics => collect::<Vec<String>>
+                        - 'Turbofish' syntax (::<>)
+                    - Generics + type inference => collect::<Vec<_>>
+            - The types we add can modify our code. In other languages
+            like typed Python or TypeScript, types are used ONLY for
+            type checking.
+    */
+    elements.iter().map(|el| el.to_uppercase()).collect() // collect() is an iterator 'consumer'
+}
+
+fn move_elements(vec_a: Vec<String>, vec_b: &mut Vec<String>) {
+    /*
+        ### into_iter() will give you something different
+        depending on how its called ###
+            - '&colors.into_iter()' - Iterator created out
+            of a reference - Iterator will produce refs to
+            each value
+            - '&mut colors.into_iter()' - Iterator created
+            out of a mutable reference - Iterator will
+            produce mutable refs to each value
+            - 'colors.into_iter()' - Iterator created out
+            of a value - Iterator will produce each value.
+            Also moves the ownership of these values.
+            - RULE_OF_THUMB => call 'into_iter' with values
+            and not with reference or mutable reference
+    */
+    vec_a.into_iter().for_each(|el| vec_b.push(el));
+}
+
+fn explode(elements: &[String]) -> Vec<Vec<String>> {
+    elements
+        .iter()
+        .map(|el| el.chars().map(|c| c.to_string()).collect())
+        .collect()
+}
+
+fn find_color_or(elements: &[String], search: &str, fallback: &str) -> String {
+    /*
+        - ### find ###
+            - Calls 'next' on the iterator until it gets
+            an element that returns a truthy value from
+            the closure function
+            - Returns an 'Option' Some(value) if it found
+            something. None if it didn't find anything
+        - ### map_or ###
+            - It is a method that belongs to the 'Option'
+            enum
+            - If the Option is a None, it will return the
+            1st argument (1st argument passed to 'map_or')
+            - If the Option is a Some, it will return the
+            value out of the Some and run it through the
+            closure
+    */
+    elements
+        .iter()
+        .find(|el| el.contains(search))
+        .map_or(String::from(fallback), |el| el.to_string())
+}
+
 fn main() {
-    let colors = vec![
+    let mut colors = vec![
         String::from("blue"),
         String::from("green"),
         String::from("red"),
     ];
 
     /*
-        - color.iter() creates a new data structure
+        - colors.iter() creates a new data structure
         Iter<String>
             - Iter is separate from the Vector etc.
             we are iterating over
@@ -87,12 +191,15 @@ fn main() {
                 - Pointer to current position ("red")
                 - Pointer to end (pointing outside the
                 bounds of vector)
+                    - When the current position is
+                    equal (?) to the end position (?)
+                    vector is empty?
             - next() => Some() or None
     */
     let mut colors_iter = colors.iter();
     // We need to use 'mut' above because we are changing
     // something (pointer to current position) within the
-    //  iterator every time we use 'next()'
+    // iterator every time we use 'next()'
 
     println!("colors_iter.next() {:#?}", colors_iter.next());
     println!("colors_iter.next() {:#?}", colors_iter.next());
@@ -111,4 +218,41 @@ fn main() {
     println!();
 
     print_elements(&colors[1..3]);
+
+    println!();
+
+    // shorten_string(&mut colors); // This mutates all elements in colors
+    shorten_string(&mut colors[1..2]); // This mutates only the portion of colors used as argument
+
+    println!("Colors (shorten_string): {:#?}", colors);
+
+    println!();
+
+    let upper_cased = to_uppercase(&colors);
+
+    println!("Color (to_uppercase - new vector): {:#?}", upper_cased);
+
+    println!();
+
+    println!("Colors: {:#?}", colors);
+
+    println!();
+
+    let mut destination = vec![];
+
+    move_elements(colors, &mut destination);
+
+    println!("Destination: {:#?}", destination);
+
+    println!();
+
+    let exploded = explode(&destination);
+
+    println!("Exploded: {:#?}", exploded);
+
+    println!();
+
+    let found_color = find_color_or(&destination, "ry", "orange");
+
+    println!("Found color: {}", found_color);
 }
