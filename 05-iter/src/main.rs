@@ -135,10 +135,9 @@ fn move_elements(vec_a: Vec<String>, vec_b: &mut Vec<String>) {
             produce mutable refs to each value
             - 'colors.into_iter()' - Iterator created out
             of a value - Iterator will produce each value.
-            Also moves ownership of these values.
+            Also moves the ownership of these values.
             - RULE_OF_THUMB => call 'into_iter' with values
             and not with reference or mutable reference
-
     */
     vec_a.into_iter().for_each(|el| vec_b.push(el));
 }
@@ -162,7 +161,7 @@ fn find_color_or(elements: &[String], search: &str, fallback: &str) -> String {
             - It is a method that belongs to the 'Option'
             enum
             - If the Option is a None, it will return the
-            first argument
+            1st argument (1st argument passed to 'map_or')
             - If the Option is a Some, it will return the
             value out of the Some and run it through the
             closure
