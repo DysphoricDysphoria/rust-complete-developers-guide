@@ -67,7 +67,7 @@ fn print_elements(elements: &[String]) {
         } else {
             /*
                 ### Iterator adaptors ###
-                    - .map() is an iterator adaptor
+                    - .map() is an iterator 'adaptor'
                     - Adaptors create a step in a processing pipeline,
                     but don't actually cause any iteration
                     - .map() transforms each item (a copy?) of 'element'
@@ -109,38 +109,37 @@ fn to_uppercase(elements: &[String]) -> Vec<String> {
             to create?
                 - What am I collecting everything into?
                 - Oh, this function is supposed to return a Vector. Guess
-                I'll make a Vec
+                I'll make a Vector
                 - Other ways:
                     - Variable type declaration
                         - const uppercaseElem: Vec<String> = elem...
                     - Generics => collect::<Vec<String>>
-                        - 'Turbofish' syntax
+                        - 'Turbofish' syntax (::<>)
                     - Generics + type inference => collect::<Vec<_>>
             - The types we add can modify our code. In other languages
-            like typed Python or TypeScript, types are only USED for
+            like typed Python or TypeScript, types are used ONLY for
             type checking.
     */
     elements.iter().map(|el| el.to_uppercase()).collect() // collect() is an iterator 'consumer'
 }
 
-/*
-    ### into_iter() will give you something different
-    depending on how its called ###
-        - '&colors.into_iter()' - Iterator created out
-        of a reference - Iterator will produce refs to
-        each value
-        - '&mut colors.into_iter()' - Iterator created
-        out of a mutable reference - Iterator will
-        produce mutable refs to each value
-        - 'colors.into_iter()' - Iterator created out
-        of a value - Iterator will produce each value.
-        Also moves ownership of these values.
-        - Heretic => call 'into_iter' with values and not
-        with reference or mutable reference
-
-*/
-
 fn move_elements(vec_a: Vec<String>, vec_b: &mut Vec<String>) {
+    /*
+        ### into_iter() will give you something different
+        depending on how its called ###
+            - '&colors.into_iter()' - Iterator created out
+            of a reference - Iterator will produce refs to
+            each value
+            - '&mut colors.into_iter()' - Iterator created
+            out of a mutable reference - Iterator will
+            produce mutable refs to each value
+            - 'colors.into_iter()' - Iterator created out
+            of a value - Iterator will produce each value.
+            Also moves ownership of these values.
+            - RULE_OF_THUMB => call 'into_iter' with values
+            and not with reference or mutable reference
+
+    */
     vec_a.into_iter().for_each(|el| vec_b.push(el));
 }
 
@@ -193,6 +192,9 @@ fn main() {
                 - Pointer to current position ("red")
                 - Pointer to end (pointing outside the
                 bounds of vector)
+                    - When the current position is
+                    equal (?) to the end position (?)
+                    vector is empty?
             - next() => Some() or None
     */
     let mut colors_iter = colors.iter();
@@ -220,8 +222,8 @@ fn main() {
 
     println!();
 
-    // shorten_string(&mut colors);
-    shorten_string(&mut colors[1..2]); // We can also pass a portion of colors as well.
+    // shorten_string(&mut colors); // This mutates all elements in colors
+    shorten_string(&mut colors[1..2]); // This mutates only the portion of colors used as argument
 
     println!("Colors (shorten_string): {:#?}", colors);
 
