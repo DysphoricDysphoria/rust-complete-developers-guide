@@ -91,4 +91,58 @@
         argument reference(s).
 */
 
-fn main() {}
+/*
+    <'a> - There is a type of ref called 'a'
+    &'a  - This first ref is of type 'a'
+    &'a  - This returned ref is also of type 'a'
+*/
+fn next_language<'a>(languages: &'a [String], current: &str) -> &'a str {
+    let mut found = false;
+
+    for lang in languages {
+        if found {
+            return lang;
+        }
+
+        if lang == current {
+            found = true;
+        }
+    }
+
+    languages.last().unwrap()
+}
+
+// We are omitting lifetime annotation here.
+// Why? => 'Function that takes one ref + any number
+// of values + returns a ref'
+fn last_language(languages: &[String]) -> &str {
+    languages.last().unwrap()
+}
+
+fn longest_language<'a>(lang_a: &'a str, lang_b: &'a str) -> &'a str {
+    if lang_a.len() >= lang_b.len() {
+        lang_a
+    } else {
+        lang_b
+    }
+}
+
+fn main() {
+    let languages = vec![
+        String::from("Rust"),
+        String::from("Golang"),
+        String::from("TypeScript"),
+    ];
+
+    let result_1 = next_language(&languages, "Rust");
+
+    println!("{}", result_1);
+
+    let result_2 = last_language(&languages);
+
+    println!("{}", result_2);
+
+    let result_3 = longest_language("Erlang", "Golang");
+
+    println!("{}", result_3);
+}
