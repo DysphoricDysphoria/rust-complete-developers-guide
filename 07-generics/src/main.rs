@@ -2,15 +2,16 @@ use num_traits::ToPrimitive;
 
 /*
     ### 'solve' function ###
-        - First version - We can pass in both f32 & f64 via
-        'Float' trait
+        - First version - We can pass in both f32 & f64
+        via 'Float' trait
         - Second version - We can pass in any type of number
         via 'ToPrimitive' trait
 
     ### Trait bounds ###
         - 'Float' is a 'trait'
         - 'Float' is being used as a 'trait bound'
-        - ### What is a trait? ###
+
+        ### What is a trait? ###
         - A trait is a set of methods
         - It can contain abstract methods which don't have
         implementation
@@ -27,7 +28,8 @@ use num_traits::ToPrimitive;
         'Float' trait
 
     ### Super Solve Flexibility ###
-        - Modify 'Float' trait to 'ToPrimitive'
+        - Use 'ToPrimitive' trait instead of 'Float' trait
+        in 'solve' func
 */
 
 trait Vehicle {
@@ -48,8 +50,15 @@ impl Vehicle for Car {
     }
 }
 
-// TODO: Can we just use 'T: ToPrimitive' and pass in a float
-// and an integer
+fn start_and_stop<T: Vehicle>(vehicle: T) {
+    vehicle.start();
+    vehicle.stop();
+}
+
+// If we use 'T: ToPrimitive' and a: T, b: T and pass in an
+// integer and a float as arguments we get an error. This is
+// so because a: T, b: T implies that 'a' and 'b' are both of
+// similar type
 fn solve<T: ToPrimitive, U: ToPrimitive>(a: T, b: U) -> f64 {
     // Works with 'use num_traits::ToPrimitive;'
     let a_f64 = a.to_f64().unwrap(); // !Error: 'a as f64'
@@ -58,11 +67,6 @@ fn solve<T: ToPrimitive, U: ToPrimitive>(a: T, b: U) -> f64 {
     let b_f64 = b.to_f64().unwrap();
 
     (a_f64.powi(2) + b_f64.powi(2)).sqrt()
-}
-
-fn start_and_stop<T: Vehicle>(vehicle: T) {
-    vehicle.start();
-    vehicle.stop();
 }
 
 fn main() {
