@@ -24,3 +24,6 @@
     - Ex: `cargo add rand`
   - [Listing](crates.io)
   - [Docs](docs.rs)
+  - Remove a crate
+    - Remove/comment crate from `Cargo.toml`
+    - Run command: `cargo update` => Crate removed
