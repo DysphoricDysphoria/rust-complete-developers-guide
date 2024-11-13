@@ -1,148 +1,93 @@
-/*
-    ### Lifetime annotations ###
-        - Used with functions, structs, enums, and more
-        - Help the compiler make sure refs won't outlive
-        the value they refer to
-        - This will seem like something the compiler
-        should do on its own
-*/
+use num_traits::ToPrimitive;
 
 /*
-    ### Notes ###
-        - A lifetime is how long a binding can be used
+    ### 'solve' function ###
+        - First version - We can pass in both f32 & f64
+        via 'Float' trait
+        - Second version - We can pass in any type of
+        number via 'ToPrimitive' trait
+
+    ### Trait bounds ###
+        - 'Float' is a 'trait'
+        - 'Float' is being used as a 'trait bound'
+
+        ### What is a trait? ###
+        - A trait is a set of methods
+        - It can contain abstract methods which don't have
+        implementation
+        - It can contain default methods which have
+        implementation
+
+        - A struct/enum/primitive can implement a trait
+        - The implementor has to provide an implementation
+        for all of the abstract methods
+        - The implementor can optionally override the
+        default methods
+
+        - Behind the scenes, f32 and f64 both implement the
+        'Float' trait
+
+    ### Super Solve Flexibility ###
+        - Use 'ToPrimitive' trait instead of 'Float' trait
+        in 'solve' func
 */
 
-/*
-    ### What Lifetime Annotations Are All About? ###
-        - If we have a function that takes in two or more
-        refs and returns a ref, Rust will make a huge
-        assumption => Rust assumes that the return ref
-        will point at data referred to by one of the
-        arguments
-        - Rust will not analyze the body of our function
-        to figure out whether the return ref is pointing
-        at the first or second arg
-            - Rust still wants to know whether the
-            returned reference points to the first or
-            second argument
-            - Rust expects the user to use lifetime
-            annotation so that it knows whether the
-            returned reference points to the first or
-            second argument
+trait Vehicle {
+    // Abstract method
+    fn start(&self);
 
-    ### Common Questions Around Lifetimes ###
-        - To clarify which ref the return ref is pointing
-        at, we have to add lifetime annotations
-        - QUESTION: Why does it matter whether the return
-        ref points at the first or second arg?
-            - More or less the same code can work or break
-            depending upon what we are returning from the
-            function.
-        - QUESTION: Why doesn't Rust analyze the function
-        body to figure out if the returned ref points at
-        the first or second arg?
-            - The documentation of Rust also includes
-            lifetime annotations. If we relied on Rust to
-            figure out the lifetimes, we wouldn't know if
-            the returned ref uses the first or second arg.
-            In this case, we won't know which code would
-            work and which not.
-            - WITH lifetime annotation:
-                fn split<'a>(s: &'a str, pattern: &str) ->
-                &'a str {}
-            - WITHOUT lifetime annotation:
-                fn split(s: &str, pattern: &str) ->
-                &str
-
-    ### Lifetime Elision ###
-        - If we have a function that takes in one ref
-        and returns a ref, Rust will make the assumption
-        that the returned ref will point at data referred
-        to by the argument. Adding lifetime annotations
-        is optional in this case.
-
-        - We have to think about annotations anytime a
-        function receives a ref and returns a ref
-        - We can omit annotations in two scenarios.
-        (There are more explicit rules for this, these
-        two are the most common)
-            - Function that takes one ref + any number
-            of values + returns a ref
-            - Method that takes &self and any number of
-            other refs + returns a ref. Rust assumes
-            the returned ref will point at &self
-                - In this case, if the Rust's assumption
-                is incorrect, we need to add lifetime
-                annotation.
-
-        - Omitting lifetime annotations is referred to
-        as elision
-            - I removed/elided the lifetime annotations.
-            - We can remove/elide the annotations.
-            - Think about removal/elision of the
-            annotations.
-            - Pronunciation => eeh-lah-eed (elide)
-
-        - Adding lifetime annotations doesn't change how
-        our code runs at all. It doesn't prolong a
-        reference, it doesn't make it live longer or
-        anything like that. => It is communicating the
-        relationship b/w the returned reference and the
-        argument reference(s).
-*/
-
-/*
-    <'a> - There is a type of ref called 'a'
-    &'a  - This first ref is of type 'a'
-    &'a  - This returned ref is also of type 'a'
-*/
-fn next_language<'a>(languages: &'a [String], current: &str) -> &'a str {
-    let mut found = false;
-
-    for lang in languages {
-        if found {
-            return lang;
-        }
-
-        if lang == current {
-            found = true;
-        }
+    // Default method
+    fn stop(&self) {
+        println!("Stopped");
     }
-
-    languages.last().unwrap()
 }
 
-// We are omitting lifetime annotation here.
-// Why? => 'Function that takes one ref + any number
-// of values + returns a ref'
-fn last_language(languages: &[String]) -> &str {
-    languages.last().unwrap()
+struct Car {}
+
+impl Vehicle for Car {
+    fn start(&self) {
+        println!("Started");
+    }
 }
 
-fn longest_language<'a>(lang_a: &'a str, lang_b: &'a str) -> &'a str {
-    if lang_a.len() >= lang_b.len() {
-        lang_a
-    } else {
-        lang_b
-    }
+fn start_and_stop<T: Vehicle>(vehicle: T) {
+    vehicle.start();
+    vehicle.stop();
+}
+
+// If we use 'T: ToPrimitive' and a: T, b: T and pass in an
+// integer and a float as arguments we get an error. This is
+// so because a: T, b: T implies that 'a' and 'b' are both of
+// similar type
+fn solve<T: ToPrimitive, U: ToPrimitive>(a: T, b: U) -> f64 {
+    // Works with 'use num_traits::ToPrimitive;'
+    let a_f64 = a.to_f64().unwrap(); // !Error: 'a as f64'
+
+    // Works with 'use num_traits::ToPrimitive;'
+    let b_f64 = b.to_f64().unwrap();
+
+    (a_f64.powi(2) + b_f64.powi(2)).sqrt()
 }
 
 fn main() {
-    let languages = vec![
-        String::from("Rust"),
-        String::from("Golang"),
-        String::from("TypeScript"),
-    ];
+    // Can't take different type of numbers and do
+    // arithmetic on them
+    let a: f32 = 3.0;
+    let b: f64 = 4.0;
 
-    let result_1 = next_language(&languages, "Rust");
+    println!("{}", solve::<f32, f64>(a, b));
 
-    println!("{}", result_1);
+    // Here, we are relying upon inference
+    println!("{}", solve(6.0, 8.0));
 
-    let result_2 = last_language(&languages);
+    println!();
 
-    println!("{}", result_2);
+    let car = Car {};
+    start_and_stop(car);
 
-    let result_3 = longest_language("Erlang", "Golang");
+    println!();
 
-    println!("{}", result_3);
+    // Super solve flexibility (with 'ToPrimitive')
+    // This won't work with 'Float' trait
+    println!("{}", solve(30, 40.0));
 }
