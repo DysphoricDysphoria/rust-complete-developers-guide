@@ -4,8 +4,8 @@ use num_traits::ToPrimitive;
     ### 'solve' function ###
         - First version - We can pass in both f32 & f64
         via 'Float' trait
-        - Second version - We can pass in any type of number
-        via 'ToPrimitive' trait
+        - Second version - We can pass in any type of
+        number via 'ToPrimitive' trait
 
     ### Trait bounds ###
         - 'Float' is a 'trait'
