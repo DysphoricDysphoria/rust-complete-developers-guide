@@ -19,7 +19,7 @@ struct Deck {
 // Inherent implementation block
 impl Deck {
     // We can also use '-> Deck' instead of '-> Self' in
-    // the function signature.
+    // the function signature
     // 'new' is an associated function
     fn new() -> Self {
         // List of suits
@@ -31,7 +31,7 @@ impl Deck {
         // Variables are 'bindings' in Rust
         let mut cards = Vec::new();
         // Without 'mut' we can't reassign or change the
-        // value of bindings.
+        // value of bindings
         // Vec::new() is the same as vec![]
 
         // Double nested for loop to create a deck of cards
@@ -68,7 +68,7 @@ impl Deck {
 }
 
 fn main() {
-    let mut deck = Deck::new();
+    let mut deck: Deck = Deck::new();
 
     // Shuffle the deck
     deck.shuffle();

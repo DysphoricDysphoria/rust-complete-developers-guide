@@ -8,7 +8,7 @@ struct Deck {
 }
 
 /*
-    ### Associated functions and Methods ###
+    ### Associated functions and methods ###
         - Associated functions are functions that are
         associated with the struct itself, not instances
         of the struct.
