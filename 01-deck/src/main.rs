@@ -20,8 +20,7 @@ struct Deck {
 impl Deck {
     // We can also use '-> Deck' instead of '-> Self' in
     // the function signature
-    // 'new' is an associated
-    // function
+    // 'new' is an associated function
     fn new() -> Self {
         // List of suits
         let suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
