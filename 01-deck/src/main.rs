@@ -1,27 +1,38 @@
 use rand::{seq::SliceRandom, thread_rng};
 
-#[derive(Debug)] // This is a derive attribute. This enhances the functionality of our struct.
+// This is a derive attribute. This enhances the
+// functionality of our struct.
+#[derive(Debug)]
 struct Deck {
     cards: Vec<String>,
 }
 
 /*
     ### Associated functions and Methods ###
-    - Associated functions are functions that are associated with the struct itself, not instances of the struct.
-    - Methods are functions that are associated with instances of the struct.
+        - Associated functions are functions that are
+        associated with the struct itself, not instances
+        of the struct.
+        - Methods are functions that are associated with
+        instances of the struct.
 */
 
 // Inherent implementation block
 impl Deck {
-    // We can also use '-> Deck' instead of '-> Self' in the function signature
-    // 'new' is an associated function
+    // We can also use '-> Deck' instead of '-> Self' in
+    // the function signature
+    // 'new' is an associated
+    // function
     fn new() -> Self {
-        let suits = ["Hearts", "Diamonds", "Clubs", "Spades"]; // List of 'suits' - 'hearts', 'diamonds', 'clubs', 'spades'
-        let values = ["Ace", "Two", "Three"]; // List of 'values' - 'ace', 'two' etc.
+        // List of suits
+        let suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
+
+        // List of values
+        let values = ["Ace", "Two", "Three"];
 
         // Variables are 'bindings' in Rust
         let mut cards = Vec::new();
-        // Without 'mut' we can't reassign or change the value of bindings
+        // Without 'mut' we can't reassign or change the
+        // value of bindings
         // Vec::new() is the same as vec![]
 
         // Double nested for loop to create a deck of cards
@@ -33,15 +44,21 @@ impl Deck {
             }
         }
 
-        // Implicit return - rust automatically returns the last expression in a block (without a semicolon!)
+        // Implicit return - Rust automatically returns
+        // the last expression in a block (without a
+        // semicolon!)
         Deck { cards }
     }
 
     // Crate == Package
     // 'shuffle' is a method
     fn shuffle(&mut self) {
-        let mut rng = thread_rng(); // thread_rng() is a function that returns a random number generator
-        self.cards.shuffle(&mut rng); // shuffle() is a method that shuffles the deck
+        // thread_rng() is a function that returns a random
+        // number generator
+        let mut rng = thread_rng();
+
+        // shuffle() is a method that shuffles the deck
+        self.cards.shuffle(&mut rng);
     }
 
     // 'deal' is a method
@@ -57,7 +74,8 @@ fn main() {
     // Shuffle the deck
     deck.shuffle();
 
-    // TODO: Need to add error handling; try using 100 instead of 3 => deal(100)
+    // TODO: Need to add error handling; try using 100
+    // instead of 3 => deal(100)
     let cards_via_deal = deck.deal(3);
 
     println!("Here's your hand: {:#?}", cards_via_deal);
