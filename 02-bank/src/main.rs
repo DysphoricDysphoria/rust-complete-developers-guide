@@ -113,13 +113,19 @@ fn make_and_print_account() -> Account {
 fn ref_demo_0() {
     let account = Account::new(1, String::from("Johnny Wick"));
 
-    // Multiple immutable references can co-exist for a value
+    // Multiple immutable references can co-exist for a
+    // value
     let account_ref_1 = &account;
     let account_ref_2 = &account;
 
-    // account_ref_1.balance = 100; // !Error: Can't use immutable reference to update value
+    // !Error: Can't use immutable reference to update
+    // value
+    // account_ref_1.balance = 100;
 
-    // let other_account = account; // !Error: Can't move a value while reference(s) to the value exist (Caveat: Can move if the reference isn't used later on)
+    // !Error: Can't move a value while reference(s) to
+    // the value exist (Caveat: Can move if the reference
+    // isn't used later on)
+    // let other_account = account;
 
     print_account(account_ref_1);
     print_account(account_ref_2);
@@ -131,23 +137,37 @@ fn ref_demo_1() {
     let bank = Bank::new();
     let account = Account::new(1, String::from("Jamie Bravo"));
 
-    let account_ref = &account; // Immutable reference
+    // Immutable reference
+    let account_ref = &account;
 
     print_account(account_ref);
 
-    let bank_accounts_ref = &bank.accounts; // Immutable reference
+    // Immutable reference
+    let bank_accounts_ref = &bank.accounts;
 
     print_account_list_with_ref(bank_accounts_ref);
 
     /*
-        >>> QUESTION: The rule is "You can't move a value while a ref to the value exists."; Reference to bank.accounts exist still we are able to move it?
-            Answer: Rust allows you to borrow part of a struct (like a field) and later move the entire field out of the struct, as long as you DON'T USE THE REFERENCE AFTER THE MOVE.
+        ### QUESTION ###
+            The rule is "You can't move a value while a ref
+            to the value exists."; Reference to
+            bank.accounts exist & still we are able to move
+            it?
+
+            ### Answer ###
+            Rust allows you to borrow part of a struct
+            (like a field) and later move the entire field
+            out of the struct, as long as you DON'T USE THE
+            REFERENCE AFTER THE MOVE.
     */
     print_account_list_without_ref(bank.accounts);
 
-    // print_account_list_with_ref(bank_accounts_ref); // !Error: Can't use the reference once a value (bank.accounts) has been moved
+    // !Error: Can't use the reference once a value
+    // (bank.accounts) has been moved
+    // print_account_list_with_ref(bank_accounts_ref);
 
-    // println!("{:#?}", bank); // !Error: borrow of partially move value: `bank`
+    // !Error: borrow of partially moved value: `bank`
+    // println!("{:#?}", bank);
 }
 
 fn ref_demo_2() {
