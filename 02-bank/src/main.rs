@@ -106,7 +106,10 @@ fn make_and_print_account() -> Account {
 
     println!("{:#?}", account);
 
-    // &account // !Error - Can't return a reference to account which is owned by the current function
+    // !Error - Can't return a reference to account which
+    // is owned by the current function
+    // &account
+
     account
 }
 
@@ -173,17 +176,27 @@ fn ref_demo_1() {
 fn ref_demo_2() {
     let mut account = Account::new(1, String::from("Betty Davis"));
 
-    // let account_ref_read_only = &account; // !Error: We can't have a read-only (immutable) reference if we have a mutable reference or otherwise; depends on what is initialized and used first
+    // !Error: We can't have a read-only (immutable)
+    // reference if we have a mutable reference or
+    // otherwise; depends on what is initialized
+    // and used first
+    // let account_ref_read_only = &account;
 
     let account_ref_mutable_1 = &mut account; // Mutable reference
 
-    // account.balance = 100; // !Error: Can't modify a binding via its owner if we have a reference (mutable or immutable)
+    // !Error: Can't modify a binding via its owner if we
+    // have a reference (mutable or immutable)
+    // account.balance = 100;
 
-    // let account_ref_mutable_2 = &mut account; // !Error: We can't have another mutable reference if we already have one
+    // !Error: We can't have another mutable reference if
+    // we already have one
+    // let account_ref_mutable_2 = &mut account;
 
     change_account(account_ref_mutable_1);
 
-    // println!("{:#?}", account_ref_read_only.holder); // Here we are using a immutable reference although we already have a mutable reference
+    // Here we are using a immutable reference although
+    // we already have a mutable reference
+    // println!("{:#?}", account_ref_read_only.holder);
 }
 
 fn ref_demo_3() {
