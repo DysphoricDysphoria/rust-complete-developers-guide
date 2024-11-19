@@ -177,12 +177,13 @@ fn ref_demo_2() {
     let mut account = Account::new(1, String::from("Betty Davis"));
 
     // !Error: We can't have a read-only (immutable)
-    // reference if we have a mutable reference or
-    // otherwise; depends on what is initialized
+    // reference if we have a mutable reference and
+    // vice-versa; depends on what is initialized
     // and used first
     // let account_ref_read_only = &account;
 
-    let account_ref_mutable_1 = &mut account; // Mutable reference
+    // Mutable reference
+    let account_ref_mutable_1 = &mut account;
 
     // !Error: Can't modify a binding via its owner if we
     // have a reference (mutable or immutable)
@@ -201,7 +202,9 @@ fn ref_demo_2() {
 
 fn ref_demo_3() {
     let num = 5;
-    let other_num = num; // Ownership isn't transferred from num to other_num
+
+    // Ownership isn't transferred from num to other_num
+    let other_num = num;
     println!("{} {}", num, other_num);
 }
 
@@ -257,9 +260,12 @@ fn main() {
     ### ### ### ### #
     ### Ownership ###
     ### ### ### ### #
-    - The goal of ownership is to limit the ways you can reference and change data.
-        > Lesson 1: Multiple things can refer to a value at the same time, but they are all read-only
-        > Lesson 2: A value can only be updated when there are no read-only/write references to it
+    - The goal of ownership is to limit the ways you can
+    reference and change data.
+        > Lesson 1: Multiple things can refer to a value
+        at the same time, but they are all read-only
+        > Lesson 2: A value can only be updated when there
+        are no read-only/write references to it
 */
 
 /*
