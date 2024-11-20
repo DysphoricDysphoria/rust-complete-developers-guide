@@ -264,6 +264,7 @@ fn main() {
     reference and change data.
         > Lesson 1: Multiple things can refer to a value
         at the same time, but they are all read-only
+
         > Lesson 2: A value can only be updated when there
         are no read-only/write references to it
 */
@@ -272,27 +273,53 @@ fn main() {
     ### ### ### ### ### ### #
     ### Rules - Ownership ###
     ### ### ### ### ### ### #
-        1. Every value is 'owned' by a single variable (binding), struct, vector, etc. at a time
-        2. Reassigning the value to a variable (binding), passing it to a function, putting it into a vector, etc. moves the value. The old owner can't be used to access the value anymore!
+        1. Every value is 'owned' by a single variable
+        (binding), struct, vector, etc. at a time
+
+        2. Reassigning the value to a variable (binding),
+        passing it to a function, putting it into a
+        vector, etc. moves the value. The old owner can't
+        be used to access the value anymore!
 
     ### ### ### ### ### ### #
     ### Rules - Borrowing ###
     ### ### ### ### ### ### #
-        3. You can create many read-only (immutable) references to a value. These refs can all exist at the same time.
-        4. You can't move a value while a ref to the value exists. (Caveat: Can move if the reference isn't used after moving the value)
+        3. You can create many read-only (immutable)
+        references to a value. These refs can all exist
+        at the same time.
 
-        5. You can make a writeable (mutable) reference to a value only if there are no read-only references currently in use. Only one mutable ref to a value can exist at a time (although we can have numerous immutable (read-only) references).
-        6. You can't mutate a value through the owner when any ref (mutable or immutable) to the value exists.
+        4. You can't move a value while a ref to the
+        value exists. (Caveat: Can move if the reference
+        isn't used after moving the value)
 
-        7. Some types of values like all numbers, booleans, char, tuples, arrays, references etc. are going to appear to break the rules of ownership!
+        5. You can make a writeable (mutable) reference to
+        a value only if there are no read-only references
+        currently in use. Only one mutable ref to a value
+        can exist at a time (although we can have numerous
+        immutable (read-only) references).
+
+        6. You can't mutate a value through the owner when
+        any ref (mutable or immutable) to the value exists.
+
+        7. Some types of values like all numbers, booleans,
+        char, tuples, arrays, references etc. are going to
+        appear to break the rules of ownership!
 
     ### ### ### ### ### ### #
     ### Rules - Lifetimes ###
     ### ### ### ### ### ### #
-        8. When an owner goes out of scope, the value owned by it is dropped (cleaned up in memory)
-        9. There can't be references to a value when its owner goes out of scope
-        10. References to a value can't outlive the value they refer to
+        8. When an owner goes out of scope, the value owned
+        by it is dropped (cleaned up in memory)
 
-    11. These rules will dramatically change how you write code (compared to other languages)
-    12. When in doubt, remember that Rust wants to minimize unexpected updates to data
+        9. There can't be references to a value when its
+        owner goes out of scope
+
+        10. References to a value can't outlive the value
+        they refer to
+
+    11. These rules will dramatically change how you write
+    code (compared to other languages)
+
+    12. When in doubt, remember that Rust wants to minimize
+    unexpected updates to data
 */
