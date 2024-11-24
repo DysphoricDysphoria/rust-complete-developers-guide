@@ -12,7 +12,9 @@ fn print_media(media: &Media) {
 }
 
 fn main() {
-    // In the next line instead of 'content::media::Media::AudioBook' we can also use 'Media::AudioBook'
+    // In the next line instead of
+    // 'content::media::Media::AudioBook' we can also use
+    // 'Media::AudioBook'
     let any_audio_book = content::media::Media::AudioBook {
         title: String::from("Who will cry when you will die?"),
     };

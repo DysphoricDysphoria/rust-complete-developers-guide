@@ -5,7 +5,8 @@ pub enum Media {
     Book { author: String, title: String },
     Movie { director: String, title: String },
     // Podcast { episode_number: u32, episode_name: String },
-    Podcast(u32, String), // Unnamed fields - This will probably confuse others
+    // Unnamed fields - This will probably confuse others
+    Podcast(u32, String),
     Placeholder,
 }
 
@@ -36,9 +37,11 @@ impl Media {
             Media::Movie { director, title } => {
                 format!("Movie: {} - {}", title, director)
             }
-            // We can use any name instead of 'episode_number' and 'episode_name' since we are using unnamed fields in 'Podcast' variant of Media
+            // We can use any name instead of
+            // 'episode_number' and 'episode_name' since we
+            // are using unnamed fields in 'Podcast' variant of Media
             Media::Podcast(episode_number, episode_name) => {
-                format!("Podcast: ({}.) {}", episode_number, episode_name)
+                format!("Podcast: {} - {}", episode_number, episode_name)
             }
             Media::Placeholder => {
                 format!("Placeholder!")
