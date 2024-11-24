@@ -17,13 +17,17 @@ impl Catalog {
     }
 
     pub fn add(&mut self, media: Media) {
-        self.items.push(media); // We are taking ownership of 'media' here
+        // We are taking ownership of 'media' here
+        self.items.push(media);
     }
 
     pub fn get_by_index(&self, index: usize) -> MightHaveAValue {
         if self.items.len() > index {
             // Something to return
-            MightHaveAValue::ThereIsAValue(&self.items[index]) // We don't want to transfer ownership, hence the use of '&'
+
+            // Also, we don't want to transfer ownership,
+            // hance the use of '&'
+            MightHaveAValue::ThereIsAValue(&self.items[index])
         } else {
             // Nothing to return
             MightHaveAValue::NoValueAvailable

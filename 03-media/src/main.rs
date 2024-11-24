@@ -54,24 +54,35 @@ fn main() {
     catalog.add(any_podcast);
 
     println!("{:#?}", catalog);
-    println!("{:#?}", catalog.items.get(4)); // Indexing into 'items' - 'Some'; 'get' is a method on vectors
-    println!("{:#?}", catalog.items.get(100)); // 'None'
+
+    // Indexing into 'items' - 'Some'; 'get' is a method
+    // on vectors
+    println!("{:#?}", catalog.items.get(4));
+
+    // 'None'
+    println!("{:#?}", catalog.items.get(100));
+
     println!("");
 
     /*
         ### Notes ###
         - Rust doesn't have null, nil, or undefined
-        - We get a built-in enum called 'Option' => Has two variants - 'Some' and 'None'
-        - If you want to work with Option you have to use pattern matching (the 'if let' thing) or a 'match' statement
-            - FORCES you to handle the case in which you have a value and the case in which you don't
+        - We get a built-in enum called 'Option' => Has
+        two variants - 'Some' and 'None'
+        - If you want to work with Option you have to use
+        pattern matching (the 'if let' thing) or a 'match'
+        statement
+            - FORCES you to handle the case in which you
+            have a value and the case in which you don't
     */
 
     let item_0 = catalog.items.get(10);
     match item_0 {
         Option::Some(value) => {
-            // Here we can add another 'match' statement that checks the
-            // type of media and prints stuff accordingly. Kinda like what
-            // we have in the 'description' method of Media
+            // Here we can add another 'match' statement
+            // that checks the type of media and prints
+            // stuff accordingly. Kinda like what we have
+            // in the 'description' method of Media
             println!("Item: {:#?}", value);
         }
         Option::None => {
@@ -84,10 +95,10 @@ fn main() {
     let item_1 = catalog.get_by_index(20);
     match item_1 {
         MightHaveAValue::ThereIsAValue(value) => {
-            println!("Item: {:#?}", value)
+            println!("Item: {:#?}", value);
         }
         MightHaveAValue::NoValueAvailable => {
-            println!("No value available")
+            println!("No value available");
         }
     }
 
@@ -96,10 +107,10 @@ fn main() {
     let item_2 = catalog.get_by_index_new(9999);
     match item_2 {
         Option::Some(value) => {
-            println!("Item (match): {:#?}", value)
+            println!("Item (match): {:#?}", value);
         }
         Option::None => {
-            println!("No value available (match)")
+            println!("No value available (match)");
         }
     }
 
