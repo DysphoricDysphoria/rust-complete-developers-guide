@@ -119,9 +119,16 @@ fn main() {
     let item_3 = catalog.get_by_index(30);
     /*
         ### if let ###
-        - Type Assertion: Rust does not have explicit type assertions like some other languages (e.g., TypeScript). Instead, it uses pattern matching to ensure that the type and structure of the data match the expected pattern.
+        - Type Assertion: Rust does not have explicit type
+        assertions like some other languages (TypeScript
+        etc.). Instead, it uses pattern matching to ensure
+        that the type and structure of the data match the
+        expected pattern.
 
-        - Comparison: This is not a comparison in the traditional sense (like ==). It's a pattern match that checks if 'item_2' is of a specific enum variant and, if so, extracts the contained value.
+        - Comparison: This is not a comparison in the
+        traditional sense (like ==). It's a pattern match
+        that checks if 'item_2' is of a specific enum
+        variant and, if so, extracts the contained value.
     */
     if let MightHaveAValue::ThereIsAValue(value) = item_3 {
         println!("Item in pattern match: {:#?}", value);
@@ -133,7 +140,7 @@ fn main() {
 
     let item_4 = catalog.get_by_index_new(10);
     if let Some(value) = item_4 {
-        println!("Item in pattern match (if let): {:#?}", value)
+        println!("Item in pattern match (if let): {:#?}", value);
     } else {
         println!("Got no value (if let)!");
     }
@@ -143,18 +150,27 @@ fn main() {
     /*
         ### Handling options ###
         - unwrap
-            - If 'item' is a Some, returns the value in the Some
+            - If 'item' is a Some, returns the value in the
+            Some
             - If 'item' is a None, panics!
             - Use for quick debugging examples
+
         - expect
-            - If 'item' is a Some, returns the value in the Some
-            - If 'item' is a None, prints the provided debug message
-            and panics!
-            - Use when we want to crash if there is no value
+            - If 'item' is a Some, returns the value in the
+            Some
+            - If 'item' is a None, prints the provided
+            debug message and panics!
+            - Use when we want to crash if there is no
+            value
+
         - unwrap_or
-            - If 'item' is a Some, returns the value in the Some
-            - If 'item' is a None, returns the provided default value
-            - Use when it makes sense to provide a fallback value
+            - If 'item' is a Some, returns the value in the
+            Some
+            - If 'item' is a None, returns the provided
+            default value
+            - Use when it makes sense to provide a fallback
+            value
+
         - Documentation
             - https://doc.rust-lang.org/std/option/enum.Option.html
     */
