@@ -112,4 +112,71 @@ fn main() {
     }
 
     println!("");
+
+    let item_3 = catalog.get_by_index(30);
+    /*
+        ### if let ###
+        - Type Assertion: Rust does not have explicit type
+        assertions like some other languages (TypeScript
+        etc.). Instead, it uses pattern matching to ensure
+        that the type and structure of the data match the
+        expected pattern.
+
+        - Comparison: This is not a comparison in the
+        traditional sense (like ==). It's a pattern match
+        that checks if 'item_2' is of a specific enum
+        variant and, if so, extracts the contained value.
+    */
+    if let MightHaveAValue::ThereIsAValue(value) = item_3 {
+        println!("Item in pattern match: {:#?}", value);
+    } else {
+        println!("Got no value (if let)!");
+    }
+
+    println!("");
+
+    let item_4 = catalog.get_by_index_new(10);
+    if let Some(value) = item_4 {
+        println!("Item in pattern match (if let): {:#?}", value);
+    } else {
+        println!("Got no value!");
+    }
+
+    println!("");
+
+    /*
+        ### Handling options ###
+        - unwrap
+            - If 'item' is a Some, returns the value in the
+            Some
+            - If 'item' is a None, panics!
+            - Use for quick debugging examples
+
+        - expect
+            - If 'item' is a Some, returns the value in the
+            Some
+            - If 'item' is a None, prints the provided
+            debug message and panics!
+            - Use when we want to crash if there is no
+            value
+
+        - unwrap_or
+            - If 'item' is a Some, returns the value in the
+            Some
+            - If 'item' is a None, returns the provided
+            default value
+            - Use when it makes sense to provide a fallback
+            value
+
+        - Documentation
+            - https://doc.rust-lang.org/std/option/enum.Option.html
+    */
+    let item_for_unwrap = catalog.get_by_index_new(0);
+    let placeholder = Media::Placeholder;
+
+    // println!("{:#?}", item_for_unwrap.unwrap());
+    // println!("{:#?}", item_for_unwrap.expect("no item found!"));
+    println!("{:#?}", item_for_unwrap.unwrap_or(&placeholder));
+
+    println!("");
 }
