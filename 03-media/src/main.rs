@@ -178,8 +178,8 @@ fn main() {
     let item_for_unwrap = catalog.get_by_index_new(0);
     let placeholder = Media::Placeholder;
 
-    // println!("{:#?}", item_for_unwrap.unwrap())
-    // println!("{:#?}", item_for_unwrap.expect("no item found!"))
+    // println!("{:#?}", item_for_unwrap.unwrap());
+    // println!("{:#?}", item_for_unwrap.expect("no item found!"));
     println!("{:#?}", item_for_unwrap.unwrap_or(&placeholder));
 
     println!("");
