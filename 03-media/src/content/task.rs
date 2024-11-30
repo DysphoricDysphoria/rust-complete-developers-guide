@@ -1,4 +1,5 @@
-use super::employee::Employee; // 'super' is the reference to the parent module
+// 'super' is the reference to the parent module
+use super::employee::Employee;
 
 #[derive(Debug)]
 pub struct Task {
