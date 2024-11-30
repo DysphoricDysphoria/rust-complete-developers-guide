@@ -1,7 +1,11 @@
 mod content;
 
-use content::catalog::{Catalog, MightHaveAValue};
+// use content::catalog::{Catalog, MightHaveAValue};
+use content::catalog::Catalog;
+use content::catalog::MightHaveAValue;
+use content::employee::Employee;
 use content::media::Media;
+use content::task::Task;
 
 // Immutable reference of Media
 fn print_media(media: &Media) {
@@ -47,8 +51,8 @@ fn main() {
     catalog.add(any_audio_book);
     catalog.add(any_book);
     catalog.add(any_movie);
-    catalog.add(any_podcast);
     catalog.add(any_placeholder);
+    catalog.add(any_podcast);
 
     println!("{:#?}", catalog);
 
@@ -92,10 +96,10 @@ fn main() {
     let item_1 = catalog.get_by_index(20);
     match item_1 {
         MightHaveAValue::ThereIsAValue(value) => {
-            println!("Item: {:#?}", value)
+            println!("Item: {:#?}", value);
         }
         MightHaveAValue::NoValueAvailable => {
-            println!("No value available")
+            println!("No value available");
         }
     }
 
@@ -104,10 +108,10 @@ fn main() {
     let item_2 = catalog.get_by_index_new(9999);
     match item_2 {
         Option::Some(value) => {
-            println!("Item (match): {:#?}", value)
+            println!("Item (match): {:#?}", value);
         }
         Option::None => {
-            println!("No value available (match)")
+            println!("No value available (match)");
         }
     }
 
@@ -130,7 +134,7 @@ fn main() {
     if let MightHaveAValue::ThereIsAValue(value) = item_3 {
         println!("Item in pattern match: {:#?}", value);
     } else {
-        println!("Got no value (if let)!");
+        println!("Got no value!");
     }
 
     println!("");
@@ -139,7 +143,7 @@ fn main() {
     if let Some(value) = item_4 {
         println!("Item in pattern match (if let): {:#?}", value);
     } else {
-        println!("Got no value!");
+        println!("Got no value (if let)!");
     }
 
     println!("");
@@ -179,4 +183,29 @@ fn main() {
     println!("{:#?}", item_for_unwrap.unwrap_or(&placeholder));
 
     println!("");
+
+    let employee1 = Employee {
+        name: String::from("Mob Boss"),
+    };
+
+    let t_1 = Task {
+        assigned_to: Some(employee1),
+    };
+
+    let t_2 = Task { assigned_to: None };
+
+    println!("t_1: {:#?}", t_1);
+
+    println!("");
+
+    println!(
+        "t_1.assigned_to.unwrap().name: {:#?}",
+        t_1.assigned_to.unwrap().name
+    );
+
+    println!("");
+
+    println!("t_2.assigned_to: {:#?}", t_2.assigned_to);
+
+    // Exercise link: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=8cab45161489fe0a2ad027d5222cb3fa
 }

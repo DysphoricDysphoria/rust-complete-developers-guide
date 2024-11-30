@@ -11,4 +11,6 @@
 // 'pub' keyword exports module; 'mod' keyword imports
 // module
 pub mod catalog;
+pub mod employee;
 pub mod media;
+pub mod task;
