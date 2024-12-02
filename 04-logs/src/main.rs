@@ -73,42 +73,48 @@ use std::io::Error;
 
 /*
     ### 75. When to Use Which String ###
-        - &String and &str - both provide a read-only reference to text
-        data - Why two different types?
-            - &str lets you refer to text in the data segment without a
-            'Heap' allocation => slightly more performant
-                - If we do it solely via 'String', it will be a lot more
-                work
-            - &str lets you 'slice' (take a portion) of text that is
-            already on the heap
+        - &String and &str - both provide a read-only
+        reference to text data - Why two different types?
+            - &str lets you refer to text in the data
+            segment without a 'Heap' allocation =>
+            slightly more performant
+                - If we do it solely via 'String', it will
+                be a lot more work
+            - &str lets you 'slice' (take a portion) of
+            text that is already on the heap
                 let color = String::from("blue"); => String
                 let portion = &color[1..4]; => &str
-                - When we do &color[1..4], behind the scenes '&str' is
-                created in Stack and &color[1..4] refers to 'lue'
-                portion of the same heap-allocated 'blue'
-                - Again, it will be a lot more work if we do this via
-                'String'
+                - When we do &color[1..4], behind the
+                scenes '&str' is created in Stack and
+                &color[1..4] refers to 'lue' portion of
+                the same heap-allocated 'blue'
+                - Again, it will be a lot more work if we
+                do this via 'String'
 
         - Usage
             - String
                 let color = String::from("red");
                 - Use anytime we want ownership of text
-                - Use anytime we want text that can grow or shrink
+                - Use anytime we want text that can
+                grow or shrink
             - &String
                 let color = String::from("red");
                 let color_ref = &color;
                 - Rarely used (usually never)
-                - Rust will automatically turn &String into &str for you
+                - Rust will automatically turn &String
+                into &str for you
             - &str
                 let color = String::from("red");
                 let c = color.as_str();
-                - Use anytime you don't want to take ownership of text
-                - Use anytime you want to refer to a 'portion' of a string
-                owned by something else.
+                - Use anytime you don't want to take
+                ownership of text
+                - Use anytime you want to refer to a
+                'portion' of a string owned by something
+                else.
 
-        - String slice (&str) can either point at text stored in the
-        'Data segment' or text stored in the 'Heap' that belongs to
-        a String
+        - String slice (&str) can either point at text
+        stored in the 'Data segment' or text stored in
+        the 'Heap' that belongs to a String
 */
 
 fn string_test(a: String, b: &String, c: &str) {
@@ -117,12 +123,16 @@ fn string_test(a: String, b: &String, c: &str) {
 
 /*
     ### Result enum ###
-        - Result enum is used when we need to know if something worked or failed
-            - Ok() variant is used when something went well
-            - Err() variant is used when something bad happened
+        - Result enum is used when we need to know if
+        something worked or failed
+            - Ok() variant is used when something went
+            well
+            - Err() variant is used when something bad
+            happened
 
     ### Option enum ###
-        - Option enum is used when we need to know if a value is present or not
+        - Option enum is used when we need to know if a
+        value is present or not
             - Some() variant is used when we have a value
             - None variant is used when there is no value
 */
