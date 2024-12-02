@@ -1,7 +1,7 @@
 /*
-    ### 73. The stack and Heap ###
+    ### 73. The Stack and Heap ###
         - Stack
-            - Fast, but limited (2 - 8 MB)
+            - Fast, but limited size (2 - 8 MB)
         - Heap
             - Slow, but can grow to store a lot of data
             (Gigabytes worth of data)
@@ -9,8 +9,8 @@
         segment
             - Stores literal values that we write directly
             into our source code
-                - Ex: let num = 45; let color = "read"; =>
-                45 and "rea" are stored into 'Data'
+                - Ex: let num = 45; let color = "red"; =>
+                45 and "red" are stored into 'Data'
         - Ex:
             - let numbers = vec![1, 2, 3, 4, 5];
                 - The initial values 1, 2, 3, 4, 5 will be
@@ -35,7 +35,7 @@
             - If a data structure owns another data
             structure, the child's metadata will be placed
             on the heap
-            - Ex; let vec_of_num = vec![ vec![1, 2, 3, 4,
+            - Ex: let vec_of_num = vec![ vec![1, 2, 3, 4,
             5] ];
                 - Metadata for nested vector will be stored
                 inside the 'Heap'
