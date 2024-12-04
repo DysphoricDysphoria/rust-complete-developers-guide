@@ -303,8 +303,10 @@ fn divide(a: f64, b: f64) -> Result<f64, Error> {
     if b == 0.0 {
         /*
             ### Error ###
-                - Error::other(...) is the instance of the 'Error' struct
-                - Many modules in the std lib have their own custom error types
+                - Error::other(...) is the instance of the
+                'Error' struct
+                - Many modules in the std lib have their
+                own custom error types
                     - use std::str::Utf8Error
 
                     - use std::string::FromUtf8Error
@@ -312,8 +314,10 @@ fn divide(a: f64, b: f64) -> Result<f64, Error> {
                     - use std::num::ParseIntError
                     - use std::num::ParseFloatError
                     - use std::num::TryFromIntError
-                - You can also create your own custom types of errors
-                - There isn't really a general-purpose catch-all type of error
+                - You can also create your own custom types
+                of errors
+                - There isn't really a general-purpose
+                catch-all type of error
                     - JavaScript has 'Error'
                     - Python has 'Exception'
         */
