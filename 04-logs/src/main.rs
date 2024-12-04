@@ -258,10 +258,10 @@ fn read_file_via_expect() {
 
 /*
     ### Returning from main ###
-        - Optionally, we can return a 'Result' from main.
-        - If we return an Ok variant, Rust won't do anything.
+        - Optionally, we can return a 'Result' from main
+        - If we return an Ok variant, Rust won't do anything
         - If we return an Err variant, Rust will print the
-        value in the Err variant.
+        value in the Err variant
 
     ### try (?) operator ###
         - '?' operator gets added onto functions that return
