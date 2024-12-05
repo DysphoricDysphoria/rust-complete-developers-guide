@@ -183,9 +183,9 @@ fn string_demo_1() {
     // If we pass reference to a String and a 'String slice'
     // is expected, rust will automatically do that for us.
     string_test(
-        "blue".to_string(),
-        &String::from("blue"),
-        &String::from("blue"),
+        "orange".to_string(),
+        &String::from("orange"),
+        &String::from("orange"),
     );
 }
 
@@ -198,13 +198,14 @@ fn extract_errors(text: &str) -> Vec<String> {
             String slices Vec<&str> which refer to parts/slices
             of the original string.
                 - Every 'String slice' points to the first
-                character of the split word
+                character of the split word?
             - 'split_text' binding => Vec<&str>; &str => refers
             to portions of the original string
             - 'results' binding => Vec<&str>; &str => refers to
             portions of the original string which start with
             'ERROR'
                 - In the 'for' loop we are COPYING the reference
+                => Vec<String>
             - Issue: When an owner goes out of scope, the value
             owned by it is dropped (cleaned up in memory)
                 - We have Vec<&str>; &str points to something that
