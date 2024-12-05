@@ -169,6 +169,66 @@ fn result_demo_1() {
     }
 }
 
+fn string_demo_1() {
+    string_test(String::from("red"), &String::from("red"), "red");
+
+    string_test(
+        "blue".to_string(),
+        &String::from("blue"),
+        String::from("blue").as_str(),
+    );
+
+    // Here, in cae of 3rd parameter rust is automatically
+    // converting &String to &str.
+    // If we pass reference to a String and a 'String slice'
+    // is expected, rust will automatically do that for us.
+    string_test(
+        "orange".to_string(),
+        &String::from("orange"),
+        &String::from("orange"),
+    );
+}
+
+fn extract_errors(text: &str) -> Vec<String> {
+    /*
+        ### 77. Understanding the Issue ###
+            - Python: When we split a string we copy the split
+            string items into an array.
+            - Rust: When we split a string we get a vector of
+            String slices Vec<&str> which refer to parts/slices
+            of the original string.
+                - Every 'String slice' points to the first
+                character of the split word?
+            - 'split_text' binding => Vec<&str>; &str => refers
+            to portions of the original string
+            - 'results' binding => Vec<&str>; &str => refers to
+            portions of the original string which start with
+            'ERROR'
+                - In the 'for' loop we are COPYING the reference
+                => Vec<String>
+            - Issue: When an owner goes out of scope, the value
+            owned by it is dropped (cleaned up in memory)
+                - We have Vec<&str>; &str points to something that
+                doesn't exist anymore!
+            - Solution: results => Vec<String>; line.to_string()
+    */
+    let split_text = text.split("\n");
+
+    let mut results = vec![];
+
+    for line in split_text {
+        if line.starts_with("ERROR") {
+            results.push(line.to_string());
+        }
+    }
+
+    results
+}
+
+fn read_file_via_match() {}
+
+fn read_file_via_expect() {}
+
 fn main() {
     result_demo_1();
 }
